@@ -1,0 +1,21 @@
+{
+  "name": "ticket-open",
+  "version": "1.0.0",
+  "description": "An open source CRM ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/gregstead/ticket-open"
+  },
+  "author": "Greg Stead",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.9",
+    "nodemon": "^2.0.7"
+  }
+}
