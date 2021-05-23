@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const apiRoutes = require("./api");
+const patronRoutes = require("./patron");
 
-//API routes
-router.use("/api", apiRoutes);
+// Patron routes
+router.use("/patron", patronRoutes);
 
 module.exports = router;
