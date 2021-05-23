@@ -2,6 +2,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+const routes = require("./routes");
+
 const PORT = process.env.PORT || 3000;
 
 //Express app
@@ -13,6 +15,9 @@ app.use(express.json());
 
 // Allow express app to serve static content from "client"
 app.use(express.static("client"));
+
+// add routes, API
+app.use(routes);
 
 // Connect to MongoDB
 mongoose.connect(
