@@ -1,10 +1,11 @@
 // Dependencies
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const routes = require("./routes");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 //Express app
 const app = express();
