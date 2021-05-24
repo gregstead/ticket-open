@@ -65,8 +65,61 @@ export default function InputPatron(props) {
         />
       </label>
       <label>
+        salutation
+        <input
+          type="text"
+          name="salutation"
+          id="salutation"
+          onChange={handleChange}
+        />
+      </label>
+      <label>
         Email:
         <input type="text" name="email" id="email" onChange={handleChange} />
+      </label>
+      <label>
+        Street:
+        <input type="text" name="street" id="street" onChange={handleChange} />
+      </label>
+      <label>
+        Street:
+        <input
+          type="text"
+          name="street2"
+          id="street2"
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        city:
+        <input type="text" name="city" id="city" onChange={handleChange} />
+      </label>
+      <label>
+        Zip Code:
+        <input
+          type="text"
+          name="zipCode"
+          id="zipCode"
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Country:
+        <input
+          type="text"
+          name="country"
+          id="country"
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Notes:
+        <input
+          type="textarea"
+          name="notes"
+          id="notes"
+          onChange={handleChange}
+        />
       </label>
       <input type="submit" value="Submit" onClick={handleSubmit} />
     </form>
