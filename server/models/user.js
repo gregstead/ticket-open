@@ -1,21 +1,26 @@
-// Dependencies
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { model, Schema } = require("mongoose");
+const validator = require("validator");
 
-const UserSchema = new Schema({
-  email: {
+const userSchema = new Schema({
+  userTitle: String,
+  userFirstName: String,
+  userlastName: String,
+  userMiddleName: String,
+  userEmail: {
     type: String,
-    trim: true,
-    required: "Email is required",
+    unique: true,
+    validate: validator.isEmail,
+    message: "That is not a valid email",
+    isAsync: false,
+    required: true,
   },
-  password: {
-    type: String,
-    trim: true,
-    required: "Password is required",
-    validate: [({ length }) => length >= 6, "Password should be longer"],
+  userPassword: String,
+  userRole: String,
+  userStatus: String,
+  dateCreated: {
+    type: Date,
+    default: Date.now,
   },
 });
 
-const User = mongoose.model("User", UserSchema);
-
-module.exports = User;
+module.exports = model("Users", userSchema);
