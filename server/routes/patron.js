@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
+const { ObjectId } = require("mongojs");
 
 // Method url-path view-file description
 // GET	'/patron'	/patron/index	display a list of all patrons
@@ -26,8 +27,23 @@ router.post("/", (req, res) => {
     });
 });
 // GET	'/patron/:id'	/patron/show	display a specific patron
+router.get("/:id", (req, res) => {
+  const id = ObjectId(req.params.id);
+  db.Patron.find({ _id: id }).then((data) => {
+    res.json(data);
+  });
+});
 // GET	'/patron/:id/edit'	/patron/edit	return an HTML form for editing a patron
+
 // PUT	'/patron/:id'	--	update a specific patron
+router.put("/:id", (req, res) => {
+  const filter = { _id: ObjectId(req.params.id) };
+  const update = { ...req.body };
+  const opts = { new: true };
+  db.Patron.findOneAndUpdate(filter, update, opts).then((data) => {
+    res.json(data);
+  });
+});
 // DELETE	'/patron/:id'	--	delete a specific patron
 
 module.exports = router;
