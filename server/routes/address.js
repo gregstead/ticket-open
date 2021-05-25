@@ -4,20 +4,20 @@ const db = require("../models");
 const { ObjectId } = require("mongojs");
 
 // Method url-path view-file description
-// GET	'/patron'	/patron/index	display a list of all patrons
+// GET	'/address'	/address/index	display a list of all addresss
 router.get("/", (req, res) => {
-  db.Patron.find().then((patrons) => {
-    res.json(patrons);
+  db.Address.find().then((addresses) => {
+    res.json(addresses);
   });
 });
-// GET	'/patron/new'	/patron/new	return an HTML form for creating a new patron
+// GET	'/address/new'	/address/new	return an HTML form for creating a new address
 router.get("/new", (req, res) => {
   res.send("I work");
 });
-// Create
+// POST	'/address'	--	create a new address
 router.post("/", (req, res) => {
-  // Create a new patron
-  db.Patron.create(req.body)
+  // Create a new address
+  db.Address.create(req.body)
     .then((data) => {
       res.json(data);
     })
@@ -26,24 +26,24 @@ router.post("/", (req, res) => {
       throw err;
     });
 });
-// Read
+// GET	'/address/:id'	/address/show	display a specific address
 router.get("/:id", (req, res) => {
   const id = ObjectId(req.params.id);
-  db.Patron.find({ _id: id }).then((data) => {
+  db.Address.find({ _id: id }).then((data) => {
     res.json(data);
   });
 });
-// GET	'/patron/:id/edit'	/patron/edit	return an HTML form for editing a patron
+// GET	'/address/:id/edit'	/address/edit	return an HTML form for editing a address
 
-// Update
+// PUT	'/address/:id'	--	update a specific address
 router.put("/:id", (req, res) => {
   const filter = { _id: ObjectId(req.params.id) };
   const update = { ...req.body };
   const opts = { new: true };
-  db.Patron.findOneAndUpdate(filter, update, opts).then((data) => {
+  db.Address.findOneAndUpdate(filter, update, opts).then((data) => {
     res.json(data);
   });
 });
-// DELETE
+// DELETE	'/address/:id'	--	delete a specific address
 
 module.exports = router;
