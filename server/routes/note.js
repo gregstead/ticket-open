@@ -45,5 +45,10 @@ router.put("/:id", (req, res) => {
   });
 });
 // DELETE	'/note/:id'	--	delete a specific note
-
+router.delete("/:id", (req, res) => {
+  const id = { _id: ObjectId(req.params.id) };
+  db.Note.delete({_id: id}).then((data) => {
+    res.json(data);
+  });
+});
 module.exports = router;

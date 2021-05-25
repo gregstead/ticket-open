@@ -45,5 +45,11 @@ router.put("/:id", (req, res) => {
   });
 });
 // DELETE	'/address/:id'	--	delete a specific address
+router.delete("/:id", (req, res) => {
+  const id = { _id: ObjectId(req.params.id) };
+  db.Address.delete({_id: id}).then((data) => {
+    res.json(data);
+  });
+});
 
 module.exports = router;

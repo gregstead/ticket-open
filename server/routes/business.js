@@ -45,5 +45,11 @@ router.put("/:id", (req, res) => {
   });
 });
 // DELETE	'/business/:id'	--	delete a specific business
+router.delete("/:id", (req, res) => {
+  const id = { _id: ObjectId(req.params.id) };
+  db.Business.delete({_id: id}).then((data) => {
+    res.json(data);
+  });
+});
 
 module.exports = router;
