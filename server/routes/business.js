@@ -4,20 +4,20 @@ const db = require("../models");
 const { ObjectId } = require("mongojs");
 
 // Method url-path view-file description
-// GET	'/patron'	/patron/index	display a list of all patrons
+// GET	'/business'	/business/index	display a list of all businesss
 router.get("/", (req, res) => {
-  db.Patron.find().then((patrons) => {
-    res.json(patrons);
+  db.Business.find().then((businesses) => {
+    res.json(businesses);
   });
 });
-// GET	'/patron/new'	/patron/new	return an HTML form for creating a new patron
+// GET	'/business/new'	/business/new	return an HTML form for creating a new business
 router.get("/new", (req, res) => {
   res.send("I work");
 });
-// POST	'/patron'	--	create a new patron
+// POST	'/business'	--	create a new business
 router.post("/", (req, res) => {
-  // Create a new patron
-  db.Patron.create(req.body)
+  // Create a new business
+  db.Business.create(req.body)
     .then((data) => {
       res.json(data);
     })
@@ -26,24 +26,24 @@ router.post("/", (req, res) => {
       throw err;
     });
 });
-// GET	'/patron/:id'	/patron/show	display a specific patron
+// GET	'/business/:id'	/business/show	display a specific business
 router.get("/:id", (req, res) => {
   const id = ObjectId(req.params.id);
-  db.Patron.find({ _id: id }).then((data) => {
+  db.Business.find({ _id: id }).then((data) => {
     res.json(data);
   });
 });
-// GET	'/patron/:id/edit'	/patron/edit	return an HTML form for editing a patron
+// GET	'/business/:id/edit'	/business/edit	return an HTML form for editing a business
 
-// PUT	'/patron/:id'	--	update a specific patron
+// PUT	'/business/:id'	--	update a specific business
 router.put("/:id", (req, res) => {
   const filter = { _id: ObjectId(req.params.id) };
   const update = { ...req.body };
   const opts = { new: true };
-  db.Patron.findOneAndUpdate(filter, update, opts).then((data) => {
+  db.Business.findOneAndUpdate(filter, update, opts).then((data) => {
     res.json(data);
   });
 });
-// DELETE	'/patron/:id'	--	delete a specific patron
+// DELETE	'/business/:id'	--	delete a specific business
 
 module.exports = router;

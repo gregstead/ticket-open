@@ -4,20 +4,20 @@ const db = require("../models");
 const { ObjectId } = require("mongojs");
 
 // Method url-path view-file description
-// GET	'/patron'	/patron/index	display a list of all patrons
+// GET	'/person'	/person/index	display a list of all persons
 router.get("/", (req, res) => {
-  db.Patron.find().then((patrons) => {
-    res.json(patrons);
+  db.Person.find().then((persons) => {
+    res.json(persons);
   });
 });
-// GET	'/patron/new'	/patron/new	return an HTML form for creating a new patron
+// GET	'/person/new'	/person/new	return an HTML form for creating a new person
 router.get("/new", (req, res) => {
   res.send("I work");
 });
-// POST	'/patron'	--	create a new patron
+// POST	'/person'	--	create a new person
 router.post("/", (req, res) => {
-  // Create a new patron
-  db.Patron.create(req.body)
+  // Create a new person
+  db.Person.create(req.body)
     .then((data) => {
       res.json(data);
     })
@@ -26,24 +26,24 @@ router.post("/", (req, res) => {
       throw err;
     });
 });
-// GET	'/patron/:id'	/patron/show	display a specific patron
+// GET	'/person/:id'	/person/show	display a specific person
 router.get("/:id", (req, res) => {
   const id = ObjectId(req.params.id);
-  db.Patron.find({ _id: id }).then((data) => {
+  db.Person.find({ _id: id }).then((data) => {
     res.json(data);
   });
 });
-// GET	'/patron/:id/edit'	/patron/edit	return an HTML form for editing a patron
+// GET	'/person/:id/edit'	/person/edit	return an HTML form for editing a person
 
-// PUT	'/patron/:id'	--	update a specific patron
+// PUT	'/person/:id'	--	update a specific person
 router.put("/:id", (req, res) => {
   const filter = { _id: ObjectId(req.params.id) };
   const update = { ...req.body };
   const opts = { new: true };
-  db.Patron.findOneAndUpdate(filter, update, opts).then((data) => {
+  db.Person.findOneAndUpdate(filter, update, opts).then((data) => {
     res.json(data);
   });
 });
-// DELETE	'/patron/:id'	--	delete a specific patron
+// DELETE	'/person/:id'	--	delete a specific person
 
 module.exports = router;

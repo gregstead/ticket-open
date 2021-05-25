@@ -4,20 +4,20 @@ const db = require("../models");
 const { ObjectId } = require("mongojs");
 
 // Method url-path view-file description
-// GET	'/patron'	/patron/index	display a list of all patrons
+// GET	'/note'	/note/index	display a list of all notes
 router.get("/", (req, res) => {
-  db.Patron.find().then((patrons) => {
-    res.json(patrons);
+  db.Note.find().then((notes) => {
+    res.json(notes);
   });
 });
-// GET	'/patron/new'	/patron/new	return an HTML form for creating a new patron
+// GET	'/note/new'	/note/new	return an HTML form for creating a new note
 router.get("/new", (req, res) => {
   res.send("I work");
 });
-// POST	'/patron'	--	create a new patron
+// POST	'/note'	--	create a new note
 router.post("/", (req, res) => {
-  // Create a new patron
-  db.Patron.create(req.body)
+  // Create a new note
+  db.Note.create(req.body)
     .then((data) => {
       res.json(data);
     })
@@ -26,24 +26,24 @@ router.post("/", (req, res) => {
       throw err;
     });
 });
-// GET	'/patron/:id'	/patron/show	display a specific patron
+// GET	'/note/:id'	/note/show	display a specific note
 router.get("/:id", (req, res) => {
   const id = ObjectId(req.params.id);
-  db.Patron.find({ _id: id }).then((data) => {
+  db.Note.find({ _id: id }).then((data) => {
     res.json(data);
   });
 });
-// GET	'/patron/:id/edit'	/patron/edit	return an HTML form for editing a patron
+// GET	'/note/:id/edit'	/note/edit	return an HTML form for editing a note
 
-// PUT	'/patron/:id'	--	update a specific patron
+// PUT	'/note/:id'	--	update a specific note
 router.put("/:id", (req, res) => {
   const filter = { _id: ObjectId(req.params.id) };
   const update = { ...req.body };
   const opts = { new: true };
-  db.Patron.findOneAndUpdate(filter, update, opts).then((data) => {
+  db.Note.findOneAndUpdate(filter, update, opts).then((data) => {
     res.json(data);
   });
 });
-// DELETE	'/patron/:id'	--	delete a specific patron
+// DELETE	'/note/:id'	--	delete a specific note
 
 module.exports = router;
