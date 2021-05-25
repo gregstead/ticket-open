@@ -2,16 +2,27 @@ const { model, Schema } = require("mongoose");
 const validator = require("validator");
 
 const patronSchema = new Schema({
+  // Patron Name
   patronTitle: String,
   patronFirstName: String,
   patronMiddleName: String,
   patronLastName: String,
   patronSalutation: String,
-  patronAddressStreet: String,
-  patronAddressStreet2: String,
+  // Patron Address
+  patronAddressStreetNumber: String,
+  patronAddressBuildingName: String,
+  patronAddressStreetNumberSuffix: String,
+  patronAddressStreetName: String,
+  patronAddressStreetType: String,
+  patronAddressStreetDirection: String,
+  patronAddressAddressType: String,
+  patronAddressAddressTypeIdentifier: String,
+  patronAddressLocalMunicipality: String,
   patronAddressCity: String,
-  patronAddressZipCode: String,
+  patronAddressGoverningDistrict: String,
+  patronAddressPostalArea: String,
   patronAddressCountry: String,
+  // Patron Contact info
   patronPhone: String,
   patronMobile: {
     type: String,
@@ -28,11 +39,12 @@ const patronSchema = new Schema({
     isAsync: false,
     required: true,
   },
-  patronStatus: String,
   patronWebsite: String,
   patronFacebook: String,
   patronTwitter: String,
   patronLinkedIn: String,
+  // Patron Details
+  patronStatus: String,
   patronBackgroundInfo: String,
   businessTitle: String,
   businessCompany: String,
@@ -42,7 +54,10 @@ const patronSchema = new Schema({
   businessAddressCity: String,
   businessAddressZipCode: String,
   businessAddressCountry: String,
-  notes: String,
+  notes: {
+    type: Schema.Types.ObjectId,
+    ref: "PatronNotes",
+  },
   patronRepresentative: {
     type: Schema.Types.ObjectId,
     ref: "Users",
