@@ -55,4 +55,4 @@ const personSchema = new Schema({
   },
 });
 
-module.exports = model("", Schema);
+module.exports = model("Person", personSchema);
