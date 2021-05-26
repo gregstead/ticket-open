@@ -45,5 +45,11 @@ router.put("/:id", (req, res) => {
   });
 });
 // DELETE	'/patron/:id'	--	delete a specific patron
+router.delete("/:id", (req, res) => {
+  const id = ObjectId(req.params.id);
+  db.Patron.deleteOne({ _id: id }).then((data) => {
+    res.json(data);
+  });
+});
 
 module.exports = router;

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
-import InputPatron from "./components/InputPatron";
+import SignIn from "./components/Signin";
 import "./App.css";
 
 function App() {
-  return <InputPatron />;
+  return <SignIn />;
 }
 
 export default App;
