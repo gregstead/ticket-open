@@ -1,10 +1,20 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import SignIn from "./components/Signin";
-import "./App.css";
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import { useRoutes } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core';
+import GlobalStyles from 'src/components/GlobalStyles';
+import 'src/mixins/chartjs';
+import theme from 'src/theme';
+import routes from 'src/routes';
 
-function App() {
-  return <SignIn />;
-}
+const App = () => {
+  const routing = useRoutes(routes);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      {routing}
+    </ThemeProvider>
+  );
+};
 
 export default App;
