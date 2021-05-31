@@ -4,7 +4,7 @@ const db = require("../models");
 const { ObjectId } = require("mongojs");
 
 // Method url-path view-file description
-// GET	'/patron'	/patron/index	display a list of all patrons
+// GET	'/patron'	/patron/	display a list of all patrons
 router.get("/", (req, res) => {
   db.Patron.find().then((patrons) => {
     res.json(patrons);
@@ -22,8 +22,8 @@ router.post("/", (req, res) => {
       res.json(data);
     })
     .catch((err) => {
-      res.status(401);
-      throw err;
+      res.status(500).json(err);
+      console.error(err);
     });
 });
 // GET	'/patron/:id'	/patron/show	display a specific patron
@@ -47,7 +47,7 @@ router.put("/:id", (req, res) => {
 // DELETE	'/patron/:id'	--	delete a specific patron
 router.delete("/:id", (req, res) => {
   const id = { _id: ObjectId(req.params.id) };
-  db.Patron.delete({_id: id}).then((data) => {
+  db.Patron.delete({ _id: id }).then((data) => {
     res.json(data);
   });
 });
