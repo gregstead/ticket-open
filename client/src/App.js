@@ -1,18 +1,22 @@
 import "./App.css";
-
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PDrawer from "./components/PDrawer";
 import AddNewPatron from "./pages/AddNewPatron";
-import AddNewUser from "./pages/AddNewUser";
-import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <AddNewPatron />
-      <br />
-      <hr />
-      <AddNewUser />
-    </div>
+    <Router>
+      <div>
+        <PDrawer
+          children={
+            <Switch>
+              <Route exact path="/patron" component={AddNewPatron} />
+            </Switch>
+          }
+        />
+      </div>
+    </Router>
   );
 }
 
