@@ -11,8 +11,11 @@ import FaceIcon from "@material-ui/icons/Face";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import SettingsIcon from "@material-ui/icons/Settings";
+import EventIcon from "@material-ui/icons/Event";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import ListOfLinks from "../ListofLinks";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,9 +44,22 @@ export default function NestedList() {
   const handlePatronsClick = () => {
     setOpen({ ...open, patrons: !open.patrons });
   };
+  const handleEventsClick = () => {
+    setOpen({ ...open, events: !open.events });
+  };
   const handleProfileClick = () => {
     setOpen({ ...open, profile: !open.profile });
   };
+
+  // const listOfLinks = (arr) => {
+  //   arr.map(([path, linkText]) => {
+  //     return (
+  //       <ListItem button className={classes.nested}>
+  //         <NavLink to={path}>{linkText}</NavLink>
+  //       </ListItem>
+  //     );
+  //   });
+  // };
   return (
     <List
       component="nav"
@@ -80,6 +96,23 @@ export default function NestedList() {
         </List>
       </Collapse>
       {/* Events */}
+      <ListItem button onClick={handleEventsClick}>
+        <ListItemIcon>
+          <EventIcon />
+        </ListItemIcon>
+        <ListItemText primary="Events" />
+        {open.events ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={open.events} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListOfLinks
+            links={[
+              ["/event/new", "Make new event"],
+              ["/event", "View Events"],
+            ]}
+          />
+        </List>
+      </Collapse>
       {/* Patrons */}
       <ListItem button onClick={handlePatronsClick}>
         <ListItemIcon>
@@ -114,6 +147,12 @@ export default function NestedList() {
         </List>
       </Collapse>
       {/* Settings */}
+      <ListItem button>
+        <ListItemIcon>
+          <SettingsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Settings" />
+      </ListItem>
     </List>
   );
 }
