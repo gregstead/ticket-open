@@ -11,6 +11,7 @@ import FaceIcon from "@material-ui/icons/Face";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import AssessmentIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from "@material-ui/icons/Settings";
 import EventIcon from "@material-ui/icons/Event";
 import ExpandLess from "@material-ui/icons/ExpandLess";
@@ -68,21 +69,29 @@ export default function NestedList() {
         <ListItemText primary="Dashboard" />
       </ListItem>
       {/* Campaigns */}
-      <ListItem button onClick={handleCampaignClick}>
+      <ListItem button onClick={handleProfileClick}>
         <ListItemIcon>
           <LoyaltyIcon />
         </ListItemIcon>
-        <ListItemText primary="Campaigns" />
-        {open.campaigns ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText primary="Users" />
+        {open.profile ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <Collapse in={open.campaigns} timeout="auto" unmountOnExit>
+      <Collapse in={open.profile} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemText primary="New campaign" />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemText primary="Edit campaigns" />
-          </ListItem>
+          {[["/campaign/new", "Add New Campaign"],
+          ["/campaign", "Campaigns"],
+        ["/campaign/edit", "Edit Campaign"]].map(([path, linkText]) => {
+            return (
+              <ListItem
+                button
+                className={classes.nested}
+                component={Link}
+                to={path}
+              >
+                <ListItemText>{linkText}</ListItemText>
+              </ListItem>
+            );
+          })}
         </List>
       </Collapse>
       {/* Events */}
@@ -98,6 +107,7 @@ export default function NestedList() {
           {[
             ["/event/new", "Make New Event"],
             ["/event", "View Events"],
+            ["/reports/campaign", "Campaign Reports"]
           ].map(([path, linkText]) => {
             return (
               <ListItem
@@ -125,6 +135,7 @@ export default function NestedList() {
           {[
             ["/patron/new", "Make New Patron"],
             ["/patron", "View Patrons"],
+            ["/reports/patron", "Patron Reports"]
           ].map(([path, linkText]) => {
             return (
               <ListItem
@@ -144,12 +155,14 @@ export default function NestedList() {
         <ListItemIcon>
           <AccountCircleIcon />
         </ListItemIcon>
-        <ListItemText primary="Profile" />
+        <ListItemText primary="Users" />
         {open.profile ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open.profile} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {[["/profile/edit", "Edit Profile"]].map(([path, linkText]) => {
+          {[["/user/new", "Add New User"],
+          ["/user", "Users"],
+        ["/user/edit", "Edit User"]].map(([path, linkText]) => {
             return (
               <ListItem
                 button
