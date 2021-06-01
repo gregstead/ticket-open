@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ListSubheader from "@material-ui/core/ListSubheader";
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NestedList() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState({
+  const [open, setOpen] = useState({
     campaigns: false,
     events: false,
     patrons: false,
