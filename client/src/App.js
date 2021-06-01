@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import PDrawer from "./components/PDrawer";
 import AddNewPatron from "./pages/AddNewPatron";
-<<<<<<< HEAD
 import Patrons from "./pages/Patrons";
 import Login from "./pages/Login";
 
@@ -23,20 +22,6 @@ function App() {
         />
       </div>
     </Router>
-=======
-import AddNewUser from "./pages/AddNewUser";
-import Navbar from "./components/Navbar";
-
-function App() {
-  return (
-    <div className="App">
-      <Navbar />
-      <AddNewPatron />
-      <br />
-      <hr />
-      <AddNewUser />
-    </div>
->>>>>>> 9942a22c54f1e94bfda560bc589b703538451de6
   );
 }
 
