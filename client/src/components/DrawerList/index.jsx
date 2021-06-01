@@ -34,11 +34,11 @@ export default function NestedList() {
     campaigns: false,
     events: false,
     patrons: false,
-    profile: false,
+    users: false,
     settings: false,
   });
 
-  const handleCampaignClick = () => {
+  const handleCampaignsClick = () => {
     setOpen({ ...open, campaigns: !open.campaigns });
   };
   const handlePatronsClick = () => {
@@ -47,9 +47,10 @@ export default function NestedList() {
   const handleEventsClick = () => {
     setOpen({ ...open, events: !open.events });
   };
-  const handleProfileClick = () => {
+  const handleUsersClick = () => {
     setOpen({ ...open, profile: !open.profile });
   };
+
 
   return (
     <List
@@ -69,14 +70,14 @@ export default function NestedList() {
         <ListItemText primary="Dashboard" />
       </ListItem>
       {/* Campaigns */}
-      <ListItem button onClick={handleProfileClick}>
+      <ListItem button onClick={handleCampaignsClick}>
         <ListItemIcon>
           <LoyaltyIcon />
         </ListItemIcon>
-        <ListItemText primary="Users" />
+        <ListItemText primary="Campaigns" />
         {open.profile ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <Collapse in={open.profile} timeout="auto" unmountOnExit>
+      <Collapse in={open.campaigns} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {[["/campaign/new", "Add New Campaign"],
           ["/campaign", "Campaigns"],
@@ -151,12 +152,12 @@ export default function NestedList() {
         </List>
       </Collapse>
       {/* Profile */}
-      <ListItem button onClick={handleProfileClick}>
+      <ListItem button onClick={handleUsersClick}>
         <ListItemIcon>
           <AccountCircleIcon />
         </ListItemIcon>
         <ListItemText primary="Users" />
-        {open.profile ? <ExpandLess /> : <ExpandMore />}
+        {open.users ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open.profile} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
@@ -181,7 +182,7 @@ export default function NestedList() {
         <ListItemIcon>
           <SettingsIcon />
         </ListItemIcon>
-        <ListItemText primary="Settings" />
+        <ListItemText primary="Settings" component={Link} to="/settings" />
       </ListItem>
     </List>
   );
