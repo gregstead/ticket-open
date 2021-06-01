@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NestedList() {
-  let history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState({
     campaigns: false,
@@ -69,11 +68,7 @@ export default function NestedList() {
       </ListItem>
       <Collapse in={open.campaigns} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem
-            button
-            className={classes.nested}
-            onClick={history.push("/patron")}
-          >
+          <ListItem button className={classes.nested}>
             <ListItemText primary="New campaign" />
           </ListItem>
           <ListItem button className={classes.nested}>
@@ -93,10 +88,10 @@ export default function NestedList() {
       <Collapse in={open.patrons} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested}>
-            <ListItemText primary="New patron" />
+            <NavLink to="/patron/new">Add patron</NavLink>
           </ListItem>
           <ListItem button className={classes.nested}>
-            <ListItemText primary="View patrons" />
+            <NavLink to="/patron">View patrons</NavLink>
           </ListItem>
         </List>
       </Collapse>
