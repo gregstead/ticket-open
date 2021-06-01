@@ -10,6 +10,7 @@ import Collapse from "@material-ui/core/Collapse";
 import FaceIcon from "@material-ui/icons/Face";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 
@@ -40,7 +41,9 @@ export default function NestedList() {
   const handlePatronsClick = () => {
     setOpen({ ...open, patrons: !open.patrons });
   };
-
+  const handleProfileClick = () => {
+    setOpen({ ...open, profile: !open.profile });
+  };
   return (
     <List
       component="nav"
@@ -95,6 +98,22 @@ export default function NestedList() {
           </ListItem>
         </List>
       </Collapse>
+      {/* Profile */}
+      <ListItem button onClick={handleProfileClick}>
+        <ListItemIcon>
+          <AccountCircleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Profile" />
+        {open.profile ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={open.profile} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <NavLink to="/profile">Edit profile</NavLink>
+          </ListItem>
+        </List>
+      </Collapse>
+      {/* Settings */}
     </List>
   );
 }
