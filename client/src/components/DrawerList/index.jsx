@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -15,7 +15,6 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import EventIcon from "@material-ui/icons/Event";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import ListOfLinks from "../ListofLinks";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +37,7 @@ export default function NestedList() {
     settings: false,
   });
 
-  const handleCampaignClick = ({ target }) => {
+  const handleCampaignClick = () => {
     setOpen({ ...open, campaigns: !open.campaigns });
   };
   const handlePatronsClick = () => {
@@ -51,15 +50,6 @@ export default function NestedList() {
     setOpen({ ...open, profile: !open.profile });
   };
 
-  // const listOfLinks = (arr) => {
-  //   arr.map(([path, linkText]) => {
-  //     return (
-  //       <ListItem button className={classes.nested}>
-  //         <NavLink to={path}>{linkText}</NavLink>
-  //       </ListItem>
-  //     );
-  //   });
-  // };
   return (
     <List
       component="nav"
@@ -105,12 +95,21 @@ export default function NestedList() {
       </ListItem>
       <Collapse in={open.events} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListOfLinks
-            links={[
-              ["/event/new", "Make new event"],
-              ["/event", "View Events"],
-            ]}
-          />
+          {[
+            ["/event/new", "Make New Event"],
+            ["/event", "View Events"],
+          ].map(([path, linkText]) => {
+            return (
+              <ListItem
+                button
+                className={classes.nested}
+                component={Link}
+                to={path}
+              >
+                <ListItemText>{linkText}</ListItemText>
+              </ListItem>
+            );
+          })}
         </List>
       </Collapse>
       {/* Patrons */}
@@ -123,12 +122,21 @@ export default function NestedList() {
       </ListItem>
       <Collapse in={open.patrons} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <NavLink to="/patron/new">Add patron</NavLink>
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <NavLink to="/patron">View patrons</NavLink>
-          </ListItem>
+          {[
+            ["/patron/new", "Make New Patron"],
+            ["/patron", "View Patrons"],
+          ].map(([path, linkText]) => {
+            return (
+              <ListItem
+                button
+                className={classes.nested}
+                component={Link}
+                to={path}
+              >
+                <ListItemText>{linkText}</ListItemText>
+              </ListItem>
+            );
+          })}
         </List>
       </Collapse>
       {/* Profile */}
@@ -141,9 +149,18 @@ export default function NestedList() {
       </ListItem>
       <Collapse in={open.profile} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <NavLink to="/profile">Edit profile</NavLink>
-          </ListItem>
+          {[["/profile/edit", "Edit Profile"]].map(([path, linkText]) => {
+            return (
+              <ListItem
+                button
+                className={classes.nested}
+                component={Link}
+                to={path}
+              >
+                <ListItemText>{linkText}</ListItemText>
+              </ListItem>
+            );
+          })}
         </List>
       </Collapse>
       {/* Settings */}
