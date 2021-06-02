@@ -11,7 +11,6 @@ import FaceIcon from "@material-ui/icons/Face";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import AssessmentIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from "@material-ui/icons/Settings";
 import EventIcon from "@material-ui/icons/Event";
 import ExpandLess from "@material-ui/icons/ExpandLess";
@@ -51,7 +50,6 @@ export default function NestedList() {
     setOpen({ ...open, profile: !open.profile });
   };
 
-
   return (
     <List
       component="nav"
@@ -79,9 +77,11 @@ export default function NestedList() {
       </ListItem>
       <Collapse in={open.campaigns} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {[["/campaign/new", "Add New Campaign"],
-          ["/campaign", "Campaigns"],
-        ["/campaign/edit", "Edit Campaign"]].map(([path, linkText]) => {
+          {[
+            ["/campaign/new", "Add New Campaign"],
+            ["/campaign", "Campaigns"],
+            ["/campaign/edit", "Edit Campaign"],
+          ].map(([path, linkText]) => {
             return (
               <ListItem
                 button
@@ -108,7 +108,7 @@ export default function NestedList() {
           {[
             ["/event/new", "Make New Event"],
             ["/event", "View Events"],
-            ["/reports/campaign", "Campaign Reports"]
+            ["/reports/campaign", "Campaign Reports"],
           ].map(([path, linkText]) => {
             return (
               <ListItem
@@ -136,7 +136,7 @@ export default function NestedList() {
           {[
             ["/patron/new", "Make New Patron"],
             ["/patron", "View Patrons"],
-            ["/reports/patron", "Patron Reports"]
+            ["/reports/patron", "Patron Reports"],
           ].map(([path, linkText]) => {
             return (
               <ListItem
@@ -161,9 +161,11 @@ export default function NestedList() {
       </ListItem>
       <Collapse in={open.profile} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {[["/user/new", "Add New User"],
-          ["/user", "Users"],
-        ["/user/edit", "Edit User"]].map(([path, linkText]) => {
+          {[
+            ["/user/new", "Add New User"],
+            ["/user", "Users"],
+            ["/user/edit", "Edit User"],
+          ].map(([path, linkText]) => {
             return (
               <ListItem
                 button
