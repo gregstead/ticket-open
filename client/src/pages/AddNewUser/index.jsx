@@ -241,11 +241,74 @@ function UserForm() {
         />
       </label>
       <label>
+        website:
+        <input
+          type="text"
+          name="website"
+          value={userState.website}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Facebook:
+        <input
+          type="text"
+          name="facebook"
+          value={userState.facebook}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Twitter:
+        <input
+          type="text"
+          name="twitter"
+          value={userState.twitter}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        LinkedIn
+        <input
+          type="text"
+          name="linkedIn"
+          value={userState.linkedIn}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
         Role:
         <input
           type="text"
           name="role"
           value={userState.role}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Business:
+        <input
+          type="text"
+          name="business"
+          value={userState.business}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Notes
+        <input
+          type="text"
+          name="notes"
+          value={userState.notes}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Representative
+        <input
+          type="text"
+          name="representative"
+          value={userState.representative}
           onChange={handleChange}
         />
       </label>

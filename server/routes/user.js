@@ -47,7 +47,7 @@ router.put("/:id", (req, res) => {
 // DELETE	'/user/:id'	--	delete a specific user
 router.delete("/:id", (req, res) => {
   const id = { _id: ObjectId(req.params.id) };
-  db.User.delete({_id: id}).then((data) => {
+  db.User.delete({ _id: id }).then((data) => {
     res.json(data);
   });
 });
