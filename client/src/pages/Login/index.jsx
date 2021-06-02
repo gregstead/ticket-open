@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { UserContextProvider } from "../../userContext";
+import { UserContextProvider, useAuth } from "../../userContext";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -63,44 +63,43 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignInSide() {
-  // const { setAuthTokens } = useAuth();
+  const { setAuthTokens } = useAuth();
   const classes = useStyles();
-  // const history = useHistory();
+  const history = useHistory();
   const [loginState, setLoginState] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
+  const [isError, setIsError] = useState(false);
+
   function handleSubmit(event) {
     event.preventDefault();
+    console.log(event);
     API.userLogin(loginState)
       .then((result) => {
-        // clear credentials
         setLoginState({
           email: "",
           password: "",
         });
         if (result.status === 200) {
-          console.log(`login result: ${result}`);
-          // Set auth tokens to
+          sessionStorage.setItem("_id", result.data._id);
+
           setAuthTokens(result.data);
 
-          setIsLoggedIn({
-            state: true,
-          });
           history.push("/home");
         } else {
           setIsError(true);
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setIsError(true);
       });
   }
 
-  function handleChange(e) {
-    const { name, value } = e.target;
+  function handleChange(event) {
+    const { name, value } = event.target;
     setLoginState({
       ...loginState,
       [name]: value,
@@ -154,6 +153,7 @@ export default function SignInSide() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleSubmit}
             >
               Sign In
             </Button>

@@ -1,6 +1,9 @@
 import axios from "axios";
 
 const API = {
+  userLogin(email, password) {
+    return axios.post("/api/auth/login", { email: email, password: password });
+  },
   // GET	'/patron'	/patron/index	display a list of all patrons
   getAllPatrons() {
     return axios.get("/patron/");
