@@ -5,27 +5,28 @@ const { ObjectId } = require("mongojs");
 
 // Method url-path view-file description
 // GET	'/business'	/business/index	display a list of all businesss
-router.get("/", (req, res) => {
-  db.Business.find().then((businesses) => {
-    res.json(businesses);
-  });
-});
-// GET	'/business/new'	/business/new	return an HTML form for creating a new business
-router.get("/new", (req, res) => {
-  res.send("I work");
-});
-// POST	'/business'	--	create a new business
-router.post("/", (req, res) => {
-  // Create a new business
-  db.Business.create(req.body)
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.status(401);
-      throw err;
+router
+  .get("/", (req, res) => {
+    db.Business.find().then((businesses) => {
+      res.json(businesses);
     });
-});
+  })
+  // GET	'/business/new'	/business/new	return an HTML form for creating a new business
+  .get("/new", (req, res) => {
+    res.send("I work");
+  })
+  // POST	'/business'	--	create a new business
+  .post("/", (req, res) => {
+    // Create a new business
+    db.Business.create(req.body)
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        res.status(401);
+        throw err;
+      });
+  });
 // GET	'/business/:id'	/business/show	display a specific business
 router.get("/:id", (req, res) => {
   const id = ObjectId(req.params.id);
@@ -47,7 +48,7 @@ router.put("/:id", (req, res) => {
 // DELETE	'/business/:id'	--	delete a specific business
 router.delete("/:id", (req, res) => {
   const id = { _id: ObjectId(req.params.id) };
-  db.Business.delete({_id: id}).then((data) => {
+  db.Business.delete({ _id: id }).then((data) => {
     res.json(data);
   });
 });
