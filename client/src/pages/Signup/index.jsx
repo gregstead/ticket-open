@@ -62,13 +62,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+export default function SignUpSide() {
   const { setAuthTokens } = useAuth();
   const classes = useStyles();
   const history = useHistory();
-  const [loginState, setLoginState] = useState({
-    username: "",
+  const [signupState, setSignupState] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
     password: "",
+
   });
 
   const [isError, setIsError] = useState(false);
@@ -76,9 +79,11 @@ export default function SignInSide() {
   function handleSubmit(event) {
     event.preventDefault();
     console.log(event);
-    API.userLogin(loginState)
+    API.userSignup(signupState)
       .then((result) => {
-        setLoginState({
+        setSignupState({
+          firstName: "",
+          lastName: "",
           email: "",
           password: "",
         });
@@ -100,8 +105,8 @@ export default function SignInSide() {
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setLoginState({
-      ...loginState,
+    setSignupState({
+      ...signupState,
       [name]: value,
     });
   }
@@ -116,11 +121,35 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign Up
           </Typography>
           <form className={classes.form} noValidate>
+          <TextField
+              
+              margin="normal"
+              required
+              fullWidth
+              id="firstName"
+              label="first name"
+              name="firstName"
+              autoComplete="firstName"
+              autoFocus
+              onChange={handleChange}
+            />
             <TextField
-              variant="outlined"
+              
+              margin="normal"
+              required
+              fullWidth
+              id="lastName"
+              label="last name"
+              name="lastName"
+              autoComplete="lastName"
+              
+              onChange={handleChange}
+            />
+            <TextField
+              
               margin="normal"
               required
               fullWidth
@@ -128,11 +157,11 @@ export default function SignInSide() {
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
+              
               onChange={handleChange}
             />
             <TextField
-              variant="outlined"
+              
               margin="normal"
               required
               fullWidth
@@ -143,10 +172,6 @@ export default function SignInSide() {
               autoComplete="current-password"
               onChange={handleChange}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -155,7 +180,7 @@ export default function SignInSide() {
               className={classes.submit}
               onClick={handleSubmit}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container>
               <Grid item xs>
@@ -164,8 +189,8 @@ export default function SignInSide() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/patron" variant="body2">
+                  {"Already have an account? Sign in"}
                 </Link>
               </Grid>
             </Grid>

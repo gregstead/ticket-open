@@ -8,14 +8,14 @@ import {
 } from "react-router-dom";
 import LeftDrawer from "./components/LeftDrawer";
 import routes from "./routes";
-import Login from "./pages/Login";
+import Signup from "./pages/Signup"
 import ProtectedRoute from "./components/ProtectedRoute";
 import AddNewUser from "./pages/AddNewUser";
 
 function App() {
   return (
     <Router>
-      {/* <Login /> */}
+      <Signup />
       <LeftDrawer>
         <Switch>
           {routes.map((route, key) => {
