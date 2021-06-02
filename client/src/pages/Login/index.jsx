@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-// import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
+import { UserContextProvider } from "../../userContext";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,14 +14,13 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-// import { useAuth } from "../../";
-// import API from "";
+import API from "../../utils/API";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://gregstead.hithub.io">
+      <Link color="inherit" href="https://gregstead.github.io">
         Greg Stead
       </Link>{" "}
       {new Date().getFullYear()}
@@ -67,40 +67,36 @@ export default function SignInSide() {
   const classes = useStyles();
   // const history = useHistory();
   const [loginState, setLoginState] = useState({
-    username: "",
+    email: "",
     password: "",
   });
-  const [isLoggedIn, setIsLoggedIn] = useState({
-    state: false,
-  });
-  const [isError, setIsError] = useState({
-    state: false,
-  });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(e);
-    // API.userLogin(loginState)
-    //   .then((result) => {
-    //     setLoginState({
-    //       email: "",
-    //       password: "",
-    //     });
-    //     if (result.status === 200) {
-    //       setAuthTokens(result.data);
+  function handleSubmit(event) {
+    event.preventDefault();
+    API.userLogin(loginState)
+      .then((result) => {
+        // clear credentials
+        setLoginState({
+          email: "",
+          password: "",
+        });
+        if (result.status === 200) {
+          console.log(`login result: ${result}`);
+          // Set auth tokens to
+          setAuthTokens(result.data);
 
-    //       setIsLoggedIn({
-    //         state: true,
-    //       });
-    //       history.push("/home");
-    //     } else {
-    //       setIsError(true);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setIsError(true);
-    //   });
+          setIsLoggedIn({
+            state: true,
+          });
+          history.push("/home");
+        } else {
+          setIsError(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsError(true);
+      });
   }
 
   function handleChange(e) {
