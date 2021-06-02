@@ -1,6 +1,6 @@
-import { creatContext, useContext } from "react";
+import { createContext, useContext } from "react";
 
-const userContext = creatContext({ user: {} }); // Create a context object
+const userContext = createContext({ user: {} }); // Create a context object
 
 export { userContext };
 
