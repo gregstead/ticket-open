@@ -1,7 +1,3 @@
-module.exports = {
-  Business: require("./Business"),
-  Note: require("./Note"),
-  Patron: require("./Patron"),
-  Person: require("./Person"),
-  User: require("./User"),
-};
+const path = require("path");
+const Seqelize = require("sequelize");
+const env = process.env.NODE_ENV || "development";

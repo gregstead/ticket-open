@@ -47,18 +47,18 @@ const patronSchema = new Schema({
   twitter: String,
   linkedIn: String,
   role: String,
-  // business: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "Business",
-  // },
-  // notes: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "Note",
-  // },
-  // representative: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "Users",
-  // },
+  business: {
+    type: Schema.Types.ObjectId,
+    ref: "Business",
+  },
+  notes: {
+    type: Schema.Types.ObjectId,
+    ref: "Note",
+  },
+  representative: {
+    type: Schema.Types.ObjectId,
+    ref: "Users",
+  },
   dateCreated: {
     type: Date,
     default: Date.now,
