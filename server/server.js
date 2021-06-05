@@ -1,11 +1,12 @@
 // Dependencies
+require("dotenv").config();
 const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
 
 const routes = require("./routes");
 
 const PORT = process.env.PORT || 3001;
+
+const db = require("./models");
 
 //Express app
 const app = express();
@@ -20,18 +21,11 @@ app.use(express.static("client"));
 // add routes, API
 app.use(routes);
 
-// Connect to MongoDB
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost:27017/ticketopen_db",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  }
-);
+// Connect to mysql db
 
 // Listen
-app.listen(PORT, () => {
-  console.log(`App listening on port: ${PORT}`);
+db.sequelize.sync(SYNC_OPTIONS).then(() => {
+  app.listen(PORT, () => {
+    console.log(`App listening on port: ${PORT}`);
+  });
 });
