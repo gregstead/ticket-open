@@ -2,6 +2,11 @@ const bcrypt = require("bcryptjs");
 
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define("User", {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,6 +28,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
       unique: false,
+    },
+    full_name: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return `${this.getDataValue("first_name")} ${this.getDataValue(
+          "last_name"
+        )}`;
+      },
     },
   });
   // Asspociate User with department
