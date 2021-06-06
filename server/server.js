@@ -12,7 +12,7 @@ const corsOptions = require("./config/cors.js");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// Define middleware here
+// Define middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
@@ -21,7 +21,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsOptions));
 
-// Serve up static assets (usually on heroku)
+// Serve up static assets
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("../client/build"));
 }
