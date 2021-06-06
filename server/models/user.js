@@ -14,7 +14,21 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: false,
+    },
+    last_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: false,
+    },
   });
+  // Asspociate User with department
+  // Associate user with role
+  // Associate user with address
+
   //  This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
   User.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);

@@ -1,6 +1,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const { User } = require("../models");
+
+const db = require("../models");
 
 passport.use(
   new LocalStrategy(
@@ -8,25 +9,27 @@ passport.use(
     {
       usernameField: "email",
     },
-    (username, password, done) => {
-      User.findOne({ email: email }, (err, user) => {
-        if (err) throw err;
-        // if username is not found in database...
-        if (!user) {
-          return done(null, false, { message: "Unknown email" });
+    (email, password, done) => {
+      db.User.findOne({ where: { email } }).then((dbUser) => {
+        if (!dbUser || !dbUser.validPassword(password)) {
+          return done(null, false, {
+            message: "Incorrect email or password",
+          });
         }
-        // if password is incorrect...
-        if (!user.comparePassword(password, (_err, data) => data)) {
-          return done(null, false, { message: "Incorrect password" });
-        }
+
+        return done(null, dbUser);
       });
     }
   )
 );
 
 // In order to help keep authentication state across HTTP requests,
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser((user, cb) => {
+  cb(null, user);
+});
+passport.deserializeUser((obj, cb) => {
+  cb(null, obj);
+});
 
 // Exporting our configured passport
 module.exports = passport;

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
-const { modelName } = require("./mongo/Person");
+
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(path.join(__dirname, "../config/config.json"))[env];
