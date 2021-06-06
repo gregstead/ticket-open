@@ -32,13 +32,19 @@ module.exports = function(sequelize, DataTypes) {
         )}`;
       },
     },
+    is_manager: {
+      type: DataTypes.BOOLEAN,
+      required: true,
+    },
   });
   User.associate = (models) => {
     // Associate user with role
-    User.belongsTo(models.role, {
-      onDelete: "NO ACTION",
-    });
+    User.belongsTo(models.role);
     // Associate user with address
+    User.belongsToMany(models.address, {
+      through: "user_address",
+    });
+    // Associate user with manager
   };
   //  This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
   User.prototype.validPassword = function(password) {
