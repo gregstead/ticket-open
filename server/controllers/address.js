@@ -18,8 +18,18 @@ const address = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  updateUser: async function(req, res) {
-    db.User.update(req.body, {
+  updateAddress: async function(req, res) {
+    db.Address.update(req.body, {
+      where: {
+        id: req.body.id,
+      },
+    })
+      .then((result) => res.json(result))
+      .catch((err) => res.status(500).json(err));
+  },
+  deleteAddress: async function(req, res) {
+    const { id } = req.body;
+    db.Address.destroy({
       where: {
         id: id,
       },
