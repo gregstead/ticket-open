@@ -1,9 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
-  const Business = sequelize.define("Business", {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+  const Business = sequelize.define("business", {
+    name: {
+      type: DataTypes.STRING,
     },
   });
   // Associate business with Address
