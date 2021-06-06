@@ -2,9 +2,9 @@ const router = require("express").Router();
 const address = require("../controllers/address");
 
 router.route("/").get(address.findAllAddresses);
-// router.route("/:id").get(address.findUserById);
-// router.route("/create").post(address.createNewUser);
-// router.route("/update").put(address.updateUser);
-// router.route("/delete").delete(address.deleteUser);
+router.route("/:id").get(address.findAddressById);
+router.route("/create").post(address.createNewAddress);
+router.route("/update").put(address.updateAddress);
+router.route("/delete").delete(address.deleteAddress);
 
 module.exports = router;
