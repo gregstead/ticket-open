@@ -6,8 +6,8 @@ module.exports = function(sequelize, DataTypes) {
   });
   //Associate Department with Role
   Department.associate = (models) => {
-    Department.belongsToMany(models.role, {
-      as: "role",
+    Department.hasMany(models.role, {
+      as: "roles",
     });
   };
   return Department;
