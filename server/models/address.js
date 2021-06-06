@@ -25,6 +25,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
     },
   });
+  // Associate with users
+  Address.associate = (models) => {
+    Address.belongsToMany(models.user, {
+      through: "user_address",
+    });
+  };
 
   return Address;
 };
