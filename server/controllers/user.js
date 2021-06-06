@@ -11,7 +11,7 @@ const user = {
       .catch((err) => res.status(500).json(err));
   },
   findUserById: function(req, res) {
-    db.User.findByPk(req.params.id, {
+    db.User.findById(req.params.id, {
       attributes: ["id", "email", "first_name", "last_name", "role"],
     })
       .then((result) => res.json(result))
