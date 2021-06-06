@@ -1,55 +1,80 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 const db = require("../models");
-const { ObjectId } = require("mongojs");
 
-// Method url-path view-file description
-// GET	'/user'	/user/index	display a list of all users
-router.get("/", (req, res) => {
-  db.User.find().then((users) => {
-    res.json(users);
-  });
-});
-// GET	'/user/new'	/user/new	return an HTML form for creating a new user
-router.get("/new", (req, res) => {
-  res.send("I work");
-});
-// POST	'/user'	--	create a new user
-router.post("/", (req, res) => {
-  // Create a new user
-  db.User.create(req.body)
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.status(401);
-      throw err;
-    });
-});
-// GET	'/user/:id'	/user/show	display a specific user
-router.get("/:id", (req, res) => {
-  const id = ObjectId(req.params.id);
-  db.User.find({ _id: id }).then((data) => {
-    res.json(data);
-  });
-});
-// GET	'/user/:id/edit'	/user/edit	return an HTML form for editing a user
+const user = {
+  findAllUsers: function(_req, res) {
+    db.user
+      .findAll({
+        attributes: ["id", "email", "first_name", "last_name", "role"],
+      })
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((err) => res.status(500).json(err));
+  },
+  findUserById: function(req, res) {
+    db.user
+      .findByPk(req.params.id, {
+        attributes: ["id", "email", "first_name", "last_name", "role"],
+      })
+      .then((result) => res.json(result))
+      .catch((err) => res.status(500).json(err));
+  },
+  createNewUser: async function(req, res) {
+    const { email, password, fName, lName, role } = req.body;
+    db.user
+      .create({
+        email: email,
+        password: password,
+        first_name: fName,
+        last_name: lName,
+        role: role,
+      })
+      .then((result) => {
+        // console.log(result);
+        const { id, email, first_name, last_name, role } = result; // eslint-disable-line
+        const sendBack = { id, email, first_name, last_name, role };
+        res.json(sendBack);
+      })
+      .catch((err) => res.status(500).json(err));
+  },
+  updateUser: async function(req, res) {
+    const { id, email, password, fName, lName, role } = req.body;
+    db.user
+      .update(
+        {
+          email: email,
+          password: password,
+          first_name: fName,
+          last_name: lName,
+          role: role,
+        },
+        {
+          where: {
+            id: id,
+          },
+        }
+      )
+      .then((result) => res.json(result))
+      .catch((err) => res.status(500).json(err));
+  },
+  deleteUser: async function(req, res) {
+    const { id } = req.body;
+    db.user
+      .destroy({
+        where: {
+          id: id,
+        },
+      })
+      .then((result) => res.json(result))
+      .catch((err) => res.status(500).json(err));
+  },
+};
 
-// PUT	'/user/:id'	--	update a specific user
-router.put("/:id", (req, res) => {
-  const filter = { _id: ObjectId(req.params.id) };
-  const update = { ...req.body };
-  const opts = { new: true };
-  db.User.findOneAndUpdate(filter, update, opts).then((data) => {
-    res.json(data);
-  });
-});
-// DELETE	'/user/:id'	--	delete a specific user
-router.delete("/:id", (req, res) => {
-  const id = { _id: ObjectId(req.params.id) };
-  db.User.delete({ _id: id }).then((data) => {
-    res.json(data);
-  });
-});
+router.route("/").get(user.findAllUsers);
+router.route("/:id").get(user.findUserById);
+router.route("/create").post(user.createNewUser);
+router.route("/update").put(user.updateUser);
+router.route("/delete").delete(user.deleteUser);
 
 module.exports = router;

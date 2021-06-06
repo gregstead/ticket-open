@@ -1,44 +1,4 @@
-// const { model, Schema } = require("mongoose");
-// const validator = require("validator");
-
-// const userSchema = new Schema({
-//   // User Name
-//   title: String,
-//   firstName: String,
-//   middleName: String,
-//   lastName: String,
-//   salutation: String,
-//   // User Address
-//   address: {
-//     streetNumber: String,
-//     buildingName: String,
-//     streetNumberSuffix: String,
-//     streetName: String,
-//     streetType: String,
-//     streetDirection: String,
-//     addressType: String,
-//     addressTypeIdentifier: String,
-//     localMunicipality: String,
-//     city: String,
-//     governingDistrict: String,
-//     postalArea: String,
-//     country: String,
-//   },
-//   phone: String,
-//   email: {
-//     type: String,
-//     unique: true,
-//     validate: validator.isEmail,
-//     message: "That is not a valid email",
-//     isAsync: false,
-//     required: true,
-//   },
-//   role: String,
-//   dateCreated: {
-//     type: Date,
-//     default: Date.now,
-//   },
-// });
+const bcrypt = require("bcryptjs");
 
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define("User", {
@@ -49,10 +9,24 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         isEmail: true,
       },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   });
+  //  This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
+  User.prototype.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+
+  // Before a User is created, automatically hash their password
+  User.addHook("beforeCreate", (user) => {
+    user.password = bcrypt.hashSync(
+      user.password,
+      bcrypt.genSaltSync(10),
+      null
+    );
+  });
+  return User;
 };
