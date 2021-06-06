@@ -1,15 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
-  const Department = sequelize.define("Department", {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+  const Department = sequelize.define("department", {
+    name: {
+      type: DataTypes.STRING,
     },
   });
   //Associate Department with Role
   Department.associate = (models) => {
-    Department.hasMany(models.role, {
-      sourceKey: "id",
+    Department.belongsToMany(models.role, {
+      as: "role",
     });
   };
   return Department;

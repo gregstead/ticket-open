@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 
 module.exports = function(sequelize, DataTypes) {
-  const User = sequelize.define("User", {
+  const User = sequelize.define("user", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -38,10 +38,13 @@ module.exports = function(sequelize, DataTypes) {
       },
     },
   });
-  // Asspociate User with department
-  // Associate user with role
-  // Associate user with address
-
+  User.associate = (models) => {
+    // Associate user with role
+    User.belongsTo(models.role, {
+      onDelete: "NO ACTION",
+    });
+    // Associate user with address
+  };
   //  This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
   User.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);

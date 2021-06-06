@@ -1,10 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  const Address = sequelize.define("Address", {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-    },
+  const Address = sequelize.define("address", {
     line1: {
       type: DataTypes.STRING,
     },
