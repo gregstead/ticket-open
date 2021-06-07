@@ -5,6 +5,12 @@ module.exports = function(sequelize, DataTypes) {
     },
   });
   // Associate business with Address
+  Business.associate = (models) => {
+    Business.belongsToMany(models.address, {
+      as: "businesses",
+      through: "business_address",
+    });
+  };
   // Associate business with Patron
   return Business;
 };
