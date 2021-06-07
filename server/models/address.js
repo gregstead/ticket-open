@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
     });
     Address.belongsToMany(models.patron, {
       as: "patron_addresses",
-      through: "patron_addresss",
+      through: "patron_address",
     });
   };
 
