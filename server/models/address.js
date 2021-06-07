@@ -35,6 +35,10 @@ module.exports = function(sequelize, DataTypes) {
       as: "business_addresses",
       through: "business_address",
     });
+    Address.belongsToMany(models.patron, {
+      as: "patron_addresses",
+      through: "patron_addresss",
+    });
   };
 
   return Address;

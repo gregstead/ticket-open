@@ -59,7 +59,12 @@ module.exports = function(sequelize, DataTypes) {
     });
     // associate with note
     //associate with address
+    Patron.belongsToMany(models.address, {
+      as: "patrons",
+      through: "patron_address",
+    });
     //associate with company
+    Patron.hasMany(models.business);
   };
 
   return Patron;
