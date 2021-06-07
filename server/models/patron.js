@@ -57,14 +57,12 @@ module.exports = function(sequelize, DataTypes) {
     Patron.hasOne(models.user, {
       as: "representative",
     });
-    // associate with note
-    //associate with address
     Patron.belongsToMany(models.address, {
       as: "patrons",
       through: "patron_address",
     });
-    //associate with company
     Patron.hasMany(models.business);
+    Patron.hasMany(models.note);
   };
 
   return Patron;
