@@ -1,23 +1,24 @@
-const db = require("../../modelss");
+const db = require("../../models");
+let patrons = require("./randomPeople.json").results;
 
-const patrons = [
-  {
-    title: "mr",
-    first_name: "Gregory",
-    middle_name: "Trevor",
-    last_name: "Stead",
-    phone: "555-555-5555",
-    phone2: "555-555-5555",
-    phone3: "555-555-5555",
-    email: "gregstead@gmail.com",
-    website: "gregstead.github.io",
-    linkedIn: "linkedin.com/in/gregstead",
-    twitter: "twitter.com/soylentgreg",
-    facebook: "none",
-    birthday: "1989-02-22",
-  },
-];
+patrons = patrons.map((patron) => {
+  return {
+    title: patron.name.title,
+    first_name: patron.name.first,
+    middle_name: null,
+    last_name: patron.name.last,
+    phone: patron.phone,
+    phone2: patron.cell,
+    phone3: null,
+    email: patron.email,
+    website: null,
+    linkedIn: null,
+    twitter: null,
+    facebook: null,
+    birthday: patron.dob.date,
+  };
+});
 
 module.exports = function() {
-  patrons.forEach((patron) => {});
+  db.patron.bulkCreate(patrons);
 };
