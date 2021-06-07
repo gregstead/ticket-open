@@ -16,9 +16,23 @@ patrons = patrons.map((patron) => {
     twitter: null,
     facebook: null,
     birthday: patron.dob.date,
+    patron_addresses: [
+      {
+        line1: patron.location.street,
+        line2: null,
+        line3: null,
+        line4: null,
+        city: patron.location.city,
+        region: patron.location.state,
+        postcode: patron.location.postcode,
+        country: patron.location.country,
+      },
+    ],
   };
 });
 
 module.exports = function() {
-  db.patron.bulkCreate(patrons);
+  patrons.forEach((patron) => {
+    db.patron.create(patron);
+  });
 };
