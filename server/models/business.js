@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
       as: "businesses",
       through: "business_address",
     });
+    Business.belongsTo(models.patron);
   };
   // Associate business with Patron
   return Business;
