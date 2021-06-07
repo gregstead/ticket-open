@@ -1,45 +1,42 @@
-module.exports = function(sequelize, DataTypes) {
-  const Address = sequelize.define("address", {
-    line1: {
-      type: DataTypes.STRING,
+"use strict";
+const { Model } = require("sequelize");
+module.exports = (sequelize, DataTypes) => {
+  class address extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      address.belongsToMany(models.user, {
+        as: "user_addresses",
+        through: "user_address",
+      });
+      address.belongsToMany(models.business, {
+        as: "business_addresses",
+        through: "business_address",
+      });
+      address.belongsToMany(models.patron, {
+        as: "patron_addresses",
+        through: "patron_address",
+      });
+    }
+  }
+  address.init(
+    {
+      line1: DataTypes.STRING,
+      line2: DataTypes.STRING,
+      line3: DataTypes.STRING,
+      line4: DataTypes.STRING,
+      city: DataTypes.STRING,
+      region: DataTypes.STRING,
+      postcode: DataTypes.STRING,
+      country: DataTypes.STRING,
     },
-    line2: {
-      type: DataTypes.STRING,
-    },
-    line3: {
-      type: DataTypes.STRING,
-    },
-    line4: {
-      type: DataTypes.STRING,
-    },
-    city: {
-      type: DataTypes.STRING,
-    },
-    region: {
-      type: DataTypes.STRING,
-    },
-    postcode: {
-      type: DataTypes.STRING,
-    },
-    country: {
-      type: DataTypes.STRING,
-    },
-  });
-
-  Address.associate = (models) => {
-    Address.belongsToMany(models.user, {
-      as: "user_addresses",
-      through: "user_address",
-    });
-    Address.belongsToMany(models.business, {
-      as: "business_addresses",
-      through: "business_address",
-    });
-    Address.belongsToMany(models.patron, {
-      as: "patron_addresses",
-      through: "patron_address",
-    });
-  };
-
-  return Address;
+    {
+      sequelize,
+      modelName: "address",
+    }
+  );
+  return address;
 };

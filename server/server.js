@@ -9,8 +9,6 @@ const routes = require("./routes");
 const passport = require("./config/passport");
 const corsOptions = require("./config/cors.js");
 
-const patronseed = require("./database/seeds/patron");
-
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -49,9 +47,7 @@ db.sequelize
     db.sequelize.sync({ force: FORCE_SCHEMA }).then(() => {
       app.listen(PORT, (err) => {
         if (err) throw err;
-        if (FORCE_SCHEMA) {
-          patronseed();
-        }
+
         console.log(
           `🌎 Server is Ready and Listening on http://localhost:${PORT}`
         ); // eslint-disable-line no-console

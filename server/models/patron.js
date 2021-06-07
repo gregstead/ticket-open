@@ -58,7 +58,7 @@ module.exports = function(sequelize, DataTypes) {
       as: "representative",
     });
     Patron.belongsToMany(models.address, {
-      as: "patrons",
+      as: "patron_addresses",
       through: "patron_address",
     });
     Patron.hasMany(models.business);
