@@ -52,6 +52,10 @@ module.exports = function(sequelize, DataTypes) {
     User.belongsTo(models.patron, {
       as: "representative",
     });
+    // Associate with note
+    User.hasMany(models.note, {
+      as: "author",
+    });
   };
   //  This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
   User.prototype.validPassword = function(password) {
