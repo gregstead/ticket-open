@@ -10,11 +10,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
     },
   });
-  // author
   Note.associate = (models) => {
     Note.belongsTo(models.user, {
       as: "author",
     });
+    Note.belongsTo(models.patron);
   };
   return Note;
 };
