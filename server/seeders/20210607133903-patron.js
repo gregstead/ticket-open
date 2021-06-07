@@ -54,11 +54,11 @@ module.exports = {
     );
     const patronIdRows = patronIds[0];
 
-    const patron_addresses = addressIdRows.map((id, idx) => {
+    const patron_addresses = addressIdRows.map((addressId, idx) => {
       return {
         createdAt: "2020-12-01",
         updatedAt: "2021-06-07",
-        addressId: addressIdRows[idx].id,
+        addressId: addressId[idx].id,
         patronId: patronIdRows[idx].id,
       };
     });
