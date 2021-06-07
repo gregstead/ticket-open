@@ -2,7 +2,7 @@
 
 const { query } = require("express");
 
-const addresses = require("./randomPeople.json").results.map((location) => {
+const addresses = require("./randomPatrons.json").results.map((location) => {
   return {
     line1:
       location.location.street.number + " " + location.location.street.name ||
@@ -42,12 +42,10 @@ const patrons = require("./randomPeople.json").results.map((patron) => {
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert("addresses", addresses, {});
-
     const addressIds = await queryInterface.sequelize.query(
       `SELECT id from ADDRESSES`
     );
     const addressIdRows = addressIds[0];
-
     await queryInterface.bulkInsert("patrons", patrons, {});
     const patronIds = await queryInterface.sequelize.query(
       `SELECT id from PATRONS`
