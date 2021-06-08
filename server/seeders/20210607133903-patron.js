@@ -1,6 +1,5 @@
 "use strict";
 
-const { query } = require("express");
 const patronsJSON = require("./data/randomPatrons.json");
 const addressMap = require("./utils/addressMap");
 const patronsMap = require("./utils/patronsMap");
@@ -11,7 +10,6 @@ const patrons = patronsMap(patronsJSON);
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert("addresses", addresses, {});
-
     const addressIds = await queryInterface.sequelize.query(
       `SELECT id from ADDRESSES`
     );
