@@ -1,7 +1,8 @@
 const db = require("../models");
 
 const user = {
-  findAllusers: function(_req, res) {
+  findAllUsers: function(_req, res) {
+    
     db.user.findAll({
       attributes: ["id", "email", "first_name", "last_name", "role"],
     })
@@ -10,14 +11,14 @@ const user = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  finduserById: function(req, res) {
+  findUserById: function(req, res) {
     db.user.findById(req.params.id, {
       attributes: ["id", "email", "first_name", "last_name", "role"],
     })
       .then((result) => res.json(result))
       .catch((err) => res.status(500).json(err));
   },
-  createNewuser: async function(req, res) {
+  createNewUser: async function(req, res) {
     const { email, password, first_name, last_name, role } = req.body;
     db.user.create({
       email: email,
@@ -34,7 +35,7 @@ const user = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  updateuser: async function(req, res) {
+  updateUser: async function(req, res) {
     const { id, email, password, fName, lName, role } = req.body;
     db.user.update(
       {
@@ -53,7 +54,7 @@ const user = {
       .then((result) => res.json(result))
       .catch((err) => res.status(500).json(err));
   },
-  deleteuser: async function(req, res) {
+  deleteUser: async function(req, res) {
     const { id } = req.body;
     db.user.destroy({
       where: {
