@@ -5,7 +5,7 @@ const address = {
     db.address.findAll()
       .then((result) => res.json(result))
       .catch((err) => res.status(500).json(err));
-  },
+  }, 
   findAddressById: function(req, res) {
     db.address.findById(req.params.id)
       .then((result) => res.json(result))
