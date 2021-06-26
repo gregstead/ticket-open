@@ -1,8 +1,8 @@
 const db = require("../models");
 
 const user = {
-  findAllUsers: function(_req, res) {
-    db.User.findAll({
+  findAllusers: function(_req, res) {
+    db.user.findAll({
       attributes: ["id", "email", "first_name", "last_name", "role"],
     })
       .then((result) => {
@@ -10,16 +10,16 @@ const user = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  findUserById: function(req, res) {
-    db.User.findById(req.params.id, {
+  finduserById: function(req, res) {
+    db.user.findById(req.params.id, {
       attributes: ["id", "email", "first_name", "last_name", "role"],
     })
       .then((result) => res.json(result))
       .catch((err) => res.status(500).json(err));
   },
-  createNewUser: async function(req, res) {
+  createNewuser: async function(req, res) {
     const { email, password, first_name, last_name, role } = req.body;
-    db.User.create({
+    db.user.create({
       email: email,
       password: password,
       first_name: first_name,
@@ -34,9 +34,9 @@ const user = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  updateUser: async function(req, res) {
+  updateuser: async function(req, res) {
     const { id, email, password, fName, lName, role } = req.body;
-    db.User.update(
+    db.user.update(
       {
         email: email,
         password: password,
@@ -53,9 +53,9 @@ const user = {
       .then((result) => res.json(result))
       .catch((err) => res.status(500).json(err));
   },
-  deleteUser: async function(req, res) {
+  deleteuser: async function(req, res) {
     const { id } = req.body;
-    db.User.destroy({
+    db.user.destroy({
       where: {
         id: id,
       },
