@@ -2,24 +2,24 @@ const db = require("../models");
 
 const department = {
   findAllDepartments: function(_req, res) {
-    db.Department.findAll()
+    db.department.findAll()
       .then((result) => res.json(result))
       .catch((err) => res.status(500).json(err));
   },
   findDepartmentById: function(req, res) {
-    db.Department.findById(req.params.id)
+    db.department.findById(req.params.id)
       .then((result) => res.json(result))
       .catch((err) => res.status(500).json(err));
   },
   createNewDepartment: function(req, res) {
-    db.Department.create(req.body)
+    db.department.create(req.body)
       .then((result) => {
         res.json(result);
       })
       .catch((err) => res.status(500).json(err));
   },
   updateDepartment: async function(req, res) {
-    db.Department.update(req.body, {
+    db.department.update(req.body, {
       where: {
         id: req.body.id,
       },
@@ -29,7 +29,7 @@ const department = {
   },
   deleteDepartment: async function(req, res) {
     const { id } = req.body;
-    db.Department.destroy({
+    db.department.destroy({
       where: {
         id: id,
       },

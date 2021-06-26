@@ -2,24 +2,24 @@ const db = require("../models");
 
 const address = {
   findAllAddresses: function(_req, res) {
-    db.Address.findAll()
+    db.address.findAll()
       .then((result) => res.json(result))
       .catch((err) => res.status(500).json(err));
   },
   findAddressById: function(req, res) {
-    db.Address.findById(req.params.id)
+    db.address.findById(req.params.id)
       .then((result) => res.json(result))
       .catch((err) => res.status(500).json(err));
   },
   createNewAddress: function(req, res) {
-    db.Address.create(req.body)
+    db.address.create(req.body)
       .then((result) => {
         res.json(result);
       })
       .catch((err) => res.status(500).json(err));
   },
   updateAddress: async function(req, res) {
-    db.Address.update(req.body, {
+    db.address.update(req.body, {
       where: {
         id: req.body.id,
       },
@@ -29,7 +29,7 @@ const address = {
   },
   deleteAddress: async function(req, res) {
     const { id } = req.body;
-    db.Address.destroy({
+    db.address.destroy({
       where: {
         id: id,
       },
