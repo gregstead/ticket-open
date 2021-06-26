@@ -79,7 +79,7 @@ export default function SignUpSide() {
   function handleSubmit(event) {
     event.preventDefault();
     console.log(event);
-    API.userSignup(signupState)
+    API.createNewUser(signupState)
       .then((result) => {
         setSignupState({
           firstName: "",
