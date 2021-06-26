@@ -1,7 +1,5 @@
 "use strict";
 
-const { query } = require("express");
-
 const addresses = require("./randomPeople.json").results.map((location) => {
   return {
     line1:
