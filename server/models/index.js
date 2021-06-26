@@ -34,8 +34,9 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
+console.log('db', db)
 Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
+  if (![modelName].associate) {
     db[modelName].associate(db);
   }
 });
