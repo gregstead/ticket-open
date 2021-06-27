@@ -16,7 +16,7 @@ export default function Patrons() {
         setSearchState({ ...searchState, results: result.data });
       })
       .catch((err) => console.error(err));
-  });
+  }, []);
 
   return <PatronTable patrons={searchState.results} />;
 }

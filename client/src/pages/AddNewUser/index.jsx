@@ -26,7 +26,7 @@ function NewUserPage() {
                 First name:
                 <input
                     type="text"
-                    name="firstName"
+                    name="first_name"
                     value={userState.firstName}
                     onChange={handleChange}
                 />
@@ -36,7 +36,7 @@ function NewUserPage() {
                 Last name:
                 <input
                     type="text"
-                    name="lastName"
+                    name="last_name"
                     value={userState.lastName}
                     onChange={handleChange}
                 />

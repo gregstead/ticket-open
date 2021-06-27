@@ -16,7 +16,7 @@ export default function Users() {
         setSearchState({ ...searchState, results: result.data });
       })
       .catch((err) => console.error(err));
-  });
+  }, []);
 
   return <UserTable users={searchState.results} />;
 }
