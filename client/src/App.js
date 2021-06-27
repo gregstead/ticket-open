@@ -15,7 +15,7 @@ import AddNewUser from "./pages/AddNewUser";
 function App() {
   return (
     <Router>
-      <Signup />
+      {/* <Signup /> */}
       <LeftDrawer>
         <Switch>
           {routes.map((route, key) => {
