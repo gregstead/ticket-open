@@ -4,7 +4,7 @@ const user = {
   findAllUsers: function(_req, res) {
     
     db.user.findAll({
-      attributes: ["id", "email", "first_name", "last_name", "role"],
+      attributes: ["id", "email", "first_name", "last_name"],
     })
       .then((result) => {
         res.json(result);
