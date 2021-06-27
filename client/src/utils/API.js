@@ -28,9 +28,12 @@ const API = {
 
   // Method url-path view-file description
   // GET	'/user'	/user/index	display a list of all users
+  getAllUsers() {
+    return axios.get("/user");
+  },
   // GET	'/user/new'	/user/new	return an HTML form for creating a new user
   createNewUser(user) {
-    return axios.post("/user", user);
+    return axios.post("/user/create", user);
   },
   // POST	'/user'	--	create a new user
 
