@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import API from "../../utils/API";
-import PatronTable from "../../components/Table/PatronTable";
+import UserTable from "../../components/Table/UserTable";
 
-export default function Patrons() {
+export default function Users() {
   const [searchState, setSearchState] = useState({
     search: "",
     filteredCache: [],
@@ -11,12 +11,12 @@ export default function Patrons() {
 
   // API call for patrons
   useEffect(() => {
-    API.getAllPatrons()
+    API.getAllUsers()
       .then((result) => {
         setSearchState({ ...searchState, results: result.data });
       })
       .catch((err) => console.error(err));
   }, []);
 
-  return <PatronTable patrons={searchState.results} />;
+  return <UserTable users={searchState.results} />;
 }
