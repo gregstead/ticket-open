@@ -7,13 +7,17 @@ import {
   Redirect,
 } from "react-router-dom";
 import SignUpSide from "./pages/Signup";
+
 import Login from "./pages/Login"
+
 import LeftDrawer from "./components/LeftDrawer";
 import routes from "./routes";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
+
 import userContext from "./userContext";
+
 
 function App() {
   const [authTokens, setAuthTokens] = useState({});
@@ -23,6 +27,7 @@ function App() {
       <Router>
         <LeftDrawer>
           <userContext.Provider value={authTokens}>
+
           <Switch>
             
             <Route exact path="/signup" render={(props) => (
@@ -32,6 +37,7 @@ function App() {
             <Route exact path="/login" render={(props) => (
               <Login {...props} setAuth={setAuthTokens} />
             )} />
+
             {/* Protected routes */}
             {routes.map((route, key) => {
               return (
@@ -45,10 +51,12 @@ function App() {
               );
             })}
           </Switch>
+
           </userContext.Provider>
         </LeftDrawer>
       </Router>
     
+
   );
 }
 

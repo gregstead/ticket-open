@@ -4,11 +4,14 @@ import AddNewUser from "./pages/AddNewUser";
 import Dashboard from "./pages/Dashboard"
 import Patrons from "./pages/Patrons";
 import Users from "./pages/Users"
+import EditPatron from "./pages/EditPatron/EditPatron";
 
 const routes = [
   {
+
     path: "/",
     component: Dashboard,
+
   },
   {
     path: "/patron/new",
@@ -25,7 +28,7 @@ const routes = [
   {
     path: "/user",
     component: Users,
-  }
+  }, 
 ];
 
 export default routes;

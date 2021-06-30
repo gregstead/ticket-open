@@ -137,6 +137,7 @@ export default function NestedList() {
             ["/patron/new", "Make New Patron"],
             ["/patron", "View Patrons"],
             ["/reports/patron", "Patron Reports"],
+            ["/patron/edit", "Edit Patron"]
           ].map(([path, linkText]) => {
             return (
               <ListItem
