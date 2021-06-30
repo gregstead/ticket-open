@@ -3,8 +3,13 @@ import AddNewPatron from "./pages/AddNewPatron";
 import AddNewUser from "./pages/AddNewUser";
 import Patrons from "./pages/Patrons";
 import Users from "./pages/Users"
+import EditPatron from "./pages/EditPatron/EditPatron";
 
 const routes = [
+  {
+    path: "/patron/edit",
+    component: EditPatron,
+  },
   {
     path: "/patron/new",
     component: AddNewPatron,
@@ -20,7 +25,7 @@ const routes = [
   {
     path: "/user",
     component: Users,
-  }
+  }, 
 ];
 
 export default routes;

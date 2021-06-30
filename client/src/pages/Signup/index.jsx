@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { UserContextProvider, useAuth } from "../../userContext";
+import userContext from "../../userContext";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -62,8 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUpSide() {
-  const { setAuthTokens } = useAuth();
+export default function SignUpSide(props) {
   const classes = useStyles();
   const history = useHistory();
   const [signupState, setSignupState] = useState({
@@ -71,7 +70,6 @@ export default function SignUpSide() {
     lastName: "",
     email: "",
     password: "",
-
   });
 
   const [isError, setIsError] = useState(false);
@@ -89,9 +87,7 @@ export default function SignUpSide() {
         });
         if (result.status === 200) {
           sessionStorage.setItem("_id", result.data._id);
-
-          setAuthTokens(result.data);
-
+          props.setAuth({...result.data})
           history.push("/home");
         } else {
           setIsError(true);
@@ -124,8 +120,7 @@ export default function SignUpSide() {
             Sign Up
           </Typography>
           <form className={classes.form} noValidate>
-          <TextField
-              
+            <TextField
               margin="normal"
               required
               fullWidth
@@ -137,7 +132,6 @@ export default function SignUpSide() {
               onChange={handleChange}
             />
             <TextField
-              
               margin="normal"
               required
               fullWidth
@@ -145,11 +139,9 @@ export default function SignUpSide() {
               label="last name"
               name="lastName"
               autoComplete="lastName"
-              
               onChange={handleChange}
             />
             <TextField
-              
               margin="normal"
               required
               fullWidth
@@ -157,11 +149,9 @@ export default function SignUpSide() {
               label="Email Address"
               name="email"
               autoComplete="email"
-              
               onChange={handleChange}
             />
             <TextField
-              
               margin="normal"
               required
               fullWidth
@@ -172,16 +162,18 @@ export default function SignUpSide() {
               autoComplete="current-password"
               onChange={handleChange}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={handleSubmit}
-            >
-              Sign Up
-            </Button>
+       
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={handleSubmit}
+                >
+                  Sign Up
+                </Button>;
+            
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

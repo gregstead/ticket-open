@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react";
 
-const userContext = createContext({ user: { _id: 100 } }); // Create an empty context object
+const userContext = createContext({}); // Create an empty context object
 
-export const userContextProvider = userContext.Provider;
+export const UserContextProvider = userContext.Provider;
 
 export default userContext;
 
