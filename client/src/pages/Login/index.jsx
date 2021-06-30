@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { UserContextProvider, useAuth } from "../../userContext";
+import { useHistory, Redirect } from "react-router-dom";
+import { useAuth } from "../../userContext";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
@@ -62,16 +60,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUpSide() {
+export default function Login() {
   const { setAuthTokens } = useAuth();
   const classes = useStyles();
   const history = useHistory();
-  const [signupState, setSignupState] = useState({
-    firstName: "",
-    lastName: "",
+  const [loginState, setLoginState] = useState({
     email: "",
     password: "",
-
   });
 
   const [isError, setIsError] = useState(false);
@@ -79,11 +74,9 @@ export default function SignUpSide() {
   function handleSubmit(event) {
     event.preventDefault();
     console.log(event);
-    API.createNewUser(signupState)
+    API.userLogin(loginState)
       .then((result) => {
-        setSignupState({
-          firstName: "",
-          lastName: "",
+        setLoginState({
           email: "",
           password: "",
         });
@@ -105,8 +98,8 @@ export default function SignUpSide() {
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setSignupState({
-      ...signupState,
+    setLoginState({
+      ...loginState,
       [name]: value,
     });
   }
@@ -121,33 +114,10 @@ export default function SignUpSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign Up
+            Login
           </Typography>
           <form className={classes.form} noValidate>
-          <TextField
-              
-              margin="normal"
-              required
-              fullWidth
-              id="firstName"
-              label="first name"
-              name="firstName"
-              autoComplete="firstName"
-              autoFocus
-              onChange={handleChange}
-            />
-            <TextField
-              
-              margin="normal"
-              required
-              fullWidth
-              id="lastName"
-              label="last name"
-              name="lastName"
-              autoComplete="lastName"
-              
-              onChange={handleChange}
-            />
+          
             <TextField
               
               margin="normal"
@@ -184,17 +154,17 @@ export default function SignUpSide() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link onClick={event => event.preventDefault()} variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-              <Link onClick={event => {
+                <Link onClick={event => {
                     event.preventDefault()
-                    history.push("/login")
+                    history.push("/signup")
                 }
                 } variant="body2">
-                  {"Have an account already? Log in!"}
+                  {"Don't have an account? Sign up!"}
                 </Link>
               </Grid>
             </Grid>
