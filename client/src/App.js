@@ -7,10 +7,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import SignUpSide from "./pages/Signup";
-<<<<<<< HEAD
 import Login from "./pages/Login"
-=======
->>>>>>> 291ffbf655154a4dd9c6322a48e32e71d59aa10f
 import LeftDrawer from "./components/LeftDrawer";
 import routes from "./routes";
 
