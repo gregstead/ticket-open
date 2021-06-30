@@ -11,10 +11,11 @@ function ProtectedRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) => {
-        return isAuthenticated ? (
+        console.log("isAuthenticated", isAuthenticated);
+        return isAuthenticated.id ? (
           <Component {...props} />
         ) : (
-          <Redirect to="/login" />
+          <Redirect to="/signup" />
         );
       }}
     />

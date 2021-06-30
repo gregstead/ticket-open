@@ -189,8 +189,12 @@ export default function SignUpSide() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/patron" variant="body2">
-                  {"Already have an account? Sign in"}
+              <Link onClick={event => {
+                    event.preventDefault()
+                    history.push("/login")
+                }
+                } variant="body2">
+                  {"Have an account already? Log in!"}
                 </Link>
               </Grid>
             </Grid>

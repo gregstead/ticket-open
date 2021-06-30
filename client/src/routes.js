@@ -1,10 +1,15 @@
 
 import AddNewPatron from "./pages/AddNewPatron";
 import AddNewUser from "./pages/AddNewUser";
+import Dashboard from "./pages/Dashboard"
 import Patrons from "./pages/Patrons";
 import Users from "./pages/Users"
 
 const routes = [
+  {
+    path: "/",
+    component: Dashboard,
+  },
   {
     path: "/patron/new",
     component: AddNewPatron,
