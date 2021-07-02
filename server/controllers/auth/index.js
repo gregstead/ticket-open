@@ -5,7 +5,12 @@ const login = async (req, res) => {
     .findOne({ where: { email: req.body.email } })
     .then((result) => {
       if (result) {
-        res.json({ id: result.id, email: result.email, status: "okay" });
+        res.json({
+          id: result.id,
+          email: result.email,
+          first_name: result.first_name,
+          last_name: result.last_name,
+        });
       }
     })
     .catch((err) => {

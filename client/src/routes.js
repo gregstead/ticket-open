@@ -12,6 +12,10 @@ const routes = [
     component: Dashboard,
   },
   {
+    path: "/dashboard",
+    component: Dashboard,
+  },
+  {
     path: "/patron/new",
     component: AddNewPatron,
   },

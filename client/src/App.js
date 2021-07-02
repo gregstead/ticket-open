@@ -16,20 +16,20 @@ function App() {
   return (
     <Router>
       <userContext.Provider value={[authTokens, setAuthTokens]}>
-        <LeftDrawer logout={setAuthTokens}>
+        <LeftDrawer>
           <Switch>
             <Route
               exact
               path="/signup"
               render={(props) => (
-                <SignUpSide {...props} setAuth={setAuthTokens} />
+                <SignUpSide {...props} />
               )}
             />
             {/* Sign in route */}
             <Route
               exact
               path="/login"
-              render={(props) => <Login {...props} setAuth={setAuthTokens} />}
+              render={(props) => <Login {...props} />}
             />
             {/* Protected routes */}
             {routes.map((route, key) => {

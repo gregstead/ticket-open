@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import userContext from "../../userContext";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -69,7 +70,7 @@ export default function Login(props) {
 
   const [isError, setIsError] = useState(false);
 
-  function handleSubmit(event) {
+  function handleSubmit(event, setAuth) {
     event.preventDefault();
     API.userLogin(loginState)
       .then((result) => {
@@ -80,7 +81,7 @@ export default function Login(props) {
         if (result.status === 200) {
           // sessionStorage.setItem("_id", result.data._id);
 
-          props.setAuth(result.data);
+          setAuth(result.data);
 
           history.push("/dashboard");
 
@@ -116,9 +117,7 @@ export default function Login(props) {
             Login
           </Typography>
           <form className={classes.form} noValidate>
-          
             <TextField
-              
               margin="normal"
               required
               fullWidth
@@ -126,11 +125,9 @@ export default function Login(props) {
               label="Email Address"
               name="email"
               autoComplete="email"
-              
               onChange={handleChange}
             />
             <TextField
-              
               margin="normal"
               required
               fullWidth
@@ -141,28 +138,39 @@ export default function Login(props) {
               autoComplete="current-password"
               onChange={handleChange}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={handleSubmit}
-            >
-              Sign Up
-            </Button>
+            <userContext.Consumer>
+              {([_authTokens, setAuthTokens]) => {
+                return (
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={(event) => {handleSubmit(event,setAuthTokens)}}
+                  >
+                    Sign Up
+                  </Button>
+                );
+              }}
+            </userContext.Consumer>
             <Grid container>
               <Grid item xs>
-                <Link onClick={event => event.preventDefault()} variant="body2">
+                <Link
+                  onClick={(event) => event.preventDefault()}
+                  variant="body2"
+                >
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link onClick={event => {
-                    event.preventDefault()
-                    history.push("/signup")
-                }
-                } variant="body2">
+                <Link
+                  onClick={(event) => {
+                    event.preventDefault();
+                    history.push("/signup");
+                  }}
+                  variant="body2"
+                >
                   {"Don't have an account? Sign up!"}
                 </Link>
               </Grid>

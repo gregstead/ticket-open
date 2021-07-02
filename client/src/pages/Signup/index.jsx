@@ -5,8 +5,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
@@ -74,21 +72,18 @@ export default function SignUpSide(props) {
 
   const [isError, setIsError] = useState(false);
 
-  function handleSubmit(event) {
+  function handleSubmit(event, setAuth) {
     event.preventDefault();
     API.createNewUser(signupState)
       .then((result) => {
         setSignupState({
-          firstName: "",
-          lastName: "",
+          first_name: "",
+          last_name: "",
           email: "",
           password: "",
         });
         if (result.status === 200) {
-          sessionStorage.setItem("_id", result.data._id);
-
-          props.setAuthTokens(result.data);
-
+          setAuth(result.data);
           history.push("/dashboard");
         } else {
           setIsError(true);
@@ -125,10 +120,10 @@ export default function SignUpSide(props) {
               margin="normal"
               required
               fullWidth
-              id="firstName"
+              id="first_name"
               label="first name"
-              name="firstName"
-              autoComplete="firstName"
+              name="first_name"
+              autoComplete="first_name"
               autoFocus
               onChange={handleChange}
             />
@@ -136,10 +131,10 @@ export default function SignUpSide(props) {
               margin="normal"
               required
               fullWidth
-              id="lastName"
+              id="last_name"
               label="last name"
-              name="lastName"
-              autoComplete="lastName"
+              name="last_name"
+              autoComplete="last_name"
               onChange={handleChange}
             />
             <TextField
@@ -163,18 +158,22 @@ export default function SignUpSide(props) {
               autoComplete="current-password"
               onChange={handleChange}
             />
-       
+            <userContext.Consumer>
+            {([_authTokens, setAuthTokens]) => {
+              return (
                 <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={handleSubmit}
-                >
-                  Sign Up
-                </Button>;
-            
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={(event) => {handleSubmit(event,setAuthTokens)}}
+            >
+              Sign Up
+            </Button>
+              )
+            }}
+            </userContext.Consumer>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -182,11 +181,13 @@ export default function SignUpSide(props) {
                 </Link>
               </Grid>
               <Grid item>
-              <Link onClick={event => {
-                    event.preventDefault()
-                    history.push("/login")
-                }
-                } variant="body2">
+                <Link
+                  onClick={(event) => {
+                    event.preventDefault();
+                    history.push("/login");
+                  }}
+                  variant="body2"
+                >
                   {"Have an account already? Log in!"}
                 </Link>
               </Grid>
