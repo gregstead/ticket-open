@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-function ProtectedRoute({ component: Component, ...rest }) {
+function ProtectedRoute({ component: Component, setAuth, ...rest }) {
   // usercontext at the global level -- inject usercontext and see if they're signed in
   // determine how they will be authenticated
 
@@ -9,8 +9,8 @@ function ProtectedRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) => {
-        console.log("isAuthenticated", isAuthenticated);
-        return isAuthenticated.id ? (
+        console.log(setAuth);
+        return true ? (
           <Component {...props} />
         ) : (
           <Redirect to="/signup" />

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useHistory, Redirect } from "react-router-dom";
-import { useAuth } from "../../userContext";
+import { useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -60,8 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
-  const { setAuthTokens } = useAuth();
+export default function Login(props) {
   const classes = useStyles();
   const history = useHistory();
   const [loginState, setLoginState] = useState({
@@ -73,7 +71,6 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(event);
     API.userLogin(loginState)
       .then((result) => {
         setLoginState({
@@ -81,11 +78,13 @@ export default function Login() {
           password: "",
         });
         if (result.status === 200) {
-          sessionStorage.setItem("_id", result.data._id);
+          // sessionStorage.setItem("_id", result.data._id);
 
-          setAuthTokens(result.data);
+          props.setAuth(result.data);
 
           history.push("/dashboard");
+
+          return 0;
         } else {
           setIsError(true);
         }

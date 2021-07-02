@@ -1,12 +1,16 @@
-const db = require("../../models")
+const db = require("../../models");
 
 const login = async (req, res) => {
-  const result = await db.User.findOne({where: { email: req.body.email}})
-  if (result) {
-    res.json({id: result.id})
-  }
-  console.log("auth controller hit");
-  res.json({ id: req.user.id });
+  await db.user
+    .findOne({ where: { email: req.body.email } })
+    .then((result) => {
+      if (result) {
+        res.json({ id: result.id, email: result.email, status: "okay" });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
 
-exports.login = login;
+module.exports = login;

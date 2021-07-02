@@ -10,7 +10,8 @@ passport.use(
       usernameField: "email",
     },
     (email, password, done) => {
-      db.User.findOne({ where: { email } }).then((dbUser) => {
+      
+      db.user.findOne({ where: { email } }).then((dbUser) => {
         if (!dbUser || !dbUser.validPassword(password)) {
           return done(null, false, {
             message: "Incorrect email or password",

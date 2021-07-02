@@ -40,6 +40,9 @@ export default function NestedList() {
   const handleCampaignsClick = () => {
     setOpen({ ...open, campaigns: !open.campaigns });
   };
+  const handleDashboardClick = () => {
+
+  };
   const handlePatronsClick = () => {
     setOpen({ ...open, patrons: !open.patrons });
   };
@@ -61,7 +64,7 @@ export default function NestedList() {
       }
       className={classes.root}
     >
-      <ListItem button>
+      <ListItem button component={Link} to={"/dashboard"}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>

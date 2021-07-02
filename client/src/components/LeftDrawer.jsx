@@ -1,17 +1,22 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button"
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import DrawerList from "./DrawerList";
+
+import userContext from "../userContext";
 
 const drawerWidth = 240;
 
@@ -73,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LeftDrawer(props) {
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -106,7 +112,14 @@ export default function LeftDrawer(props) {
           </IconButton>
           <Typography variant="h6" noWrap>
             Ticket Open
-          </Typography>
+          </Typography> 
+          <userContext.Consumer>
+            {([authTokens, setAuthTokens]) => {
+              return <Button onClick={() => {
+                authTokens.id ? setAuthTokens({}) && history.push("/login") : history.push("/login")}} color="inherit">hello</Button>
+            }}
+          
+          </userContext.Consumer>
         </Toolbar>
       </AppBar>
       <Drawer

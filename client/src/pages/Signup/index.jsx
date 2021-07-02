@@ -76,7 +76,6 @@ export default function SignUpSide(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(event);
     API.createNewUser(signupState)
       .then((result) => {
         setSignupState({
@@ -88,7 +87,7 @@ export default function SignUpSide(props) {
         if (result.status === 200) {
           sessionStorage.setItem("_id", result.data._id);
 
-          setAuthTokens(result.data);
+          props.setAuthTokens(result.data);
 
           history.push("/dashboard");
         } else {
