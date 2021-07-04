@@ -75,10 +75,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   buttonRight: {
-    float: "right",
+    margin: theme.spacing(1, 1.5),
   },
 }));
-
 export default function DashboardLayout(props) {
   const { dispatch } = React.useContext(AuthContext);
   const classes = useStyles();
