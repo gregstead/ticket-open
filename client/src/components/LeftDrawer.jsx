@@ -5,7 +5,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button"
+import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
@@ -75,6 +75,9 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  buttonRight: {
+    margin: theme.spacing(1, 1.5),
+  },
 }));
 
 export default function LeftDrawer(props) {
@@ -112,13 +115,22 @@ export default function LeftDrawer(props) {
           </IconButton>
           <Typography variant="h6" noWrap>
             Ticket Open
-          </Typography> 
+          </Typography>
           <userContext.Consumer>
-            {([authTokens, setAuthTokens]) => {
-              return <Button onClick={() => {
-                authTokens.id ? setAuthTokens({}) && history.push("/login") : history.push("/login")}} color="inherit">hello</Button>
+            {([_authTokens, setAuthTokens]) => {
+              return (
+                <Button
+                  className={classes.buttonRight}
+                  onClick={() => {
+                    setAuthTokens({});
+                    history.push("/login");
+                  }}
+                  color="inherit"
+                >
+                  Logout
+                </Button>
+              );
             }}
-          
           </userContext.Consumer>
         </Toolbar>
       </AppBar>
