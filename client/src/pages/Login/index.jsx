@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import API from "../../utils/API";
 import Copyright from "../../components/Copyright";
+import { AuthContext } from "../../App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,41 +49,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login(props) {
-  const classes = useStyles();
-  const history = useHistory();
-  const [loginState, setLoginState] = useState({
+export default function Login() {
+  const { dispatch } = React.useContext(AuthContext);
+  const initialState = {
     email: "",
     password: "",
-  });
-
-  const [isError, setIsError] = useState(false);
-
-  function handleSubmit(event, setAuth) {
-    event.preventDefault();
-    API.userLogin(loginState)
-      .then((result) => {
-        setLoginState({
-          email: "",
-          password: "",
-        });
-        if (result.status === 200) {
-          // sessionStorage.setItem("_id", result.data._id);
-
-          setAuth(result.data);
-
-          history.push("/dashboard");
-
-          return 0;
-        } else {
-          setIsError(true);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsError(true);
-      });
-  }
+    isSubmitting: false,
+    errorMessage: null,
+  };
+  const classes = useStyles();
+  const history = useHistory();
+  const [loginState, setLoginState] = useState(initialState);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -90,6 +67,30 @@ export default function Login(props) {
       ...loginState,
       [name]: value,
     });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setLoginState({
+      ...loginState,
+      isSubmitting: true,
+      errorMessage: null,
+    });
+    API.userLogin(loginState)
+      .then((result) => {
+        if (result.statusText === "OK") {
+          dispatch({ type: "LOGIN", payload: result.data });
+        }
+
+        throw result;
+      })
+      .catch((error) => {
+        setLoginState({
+          ...loginState,
+          isSubmitting: false,
+          errorMessage: error.message || error.statusText,
+        });
+      });
   }
 
   return (
@@ -113,6 +114,7 @@ export default function Login(props) {
               label="Email Address"
               name="email"
               autoComplete="email"
+              value={loginState.email}
               onChange={handleChange}
             />
             <TextField
@@ -126,22 +128,19 @@ export default function Login(props) {
               autoComplete="current-password"
               onChange={handleChange}
             />
-            <userContext.Consumer>
-              {([_authTokens, setAuthTokens]) => {
-                return (
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    onClick={(event) => {handleSubmit(event,setAuthTokens)}}
-                  >
-                    Login
-                  </Button>
-                );
-              }}
-            </userContext.Consumer>
+
+            <Button
+              disabled={loginState.isSubmitting}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleSubmit}
+            >
+              Login
+            </Button>
+
             <Grid container>
               <Grid item xs>
                 <Link
