@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUpSide from "./pages/Signup";
 import Login from "./pages/Login";
 import routes from "./routes";
-
-import Dashboard from "./pages/Dashboard";
 import DashboardLayout from "./components/DashboardLayout";
 
 export const AuthContext = React.createContext();
@@ -37,14 +35,25 @@ const reducer = (state, action) => {
   }
 };
 function App() {
-  // const [authTokens, setAuthTokens] = useState({});
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
-      <div className="App">
-        {!state.isAuthenticated ? <Login /> : <DashboardLayout />}
-      </div>
+      <Router>
+        {state.isAuthenticated ? (
+          <DashboardLayout>
+            <Switch>
+              {routes.map((route) => {
+                return (
+                  <Route exact path={route.path} component={route.component} />
+                );
+              })}
+            </Switch>
+          </DashboardLayout>
+        ) : (
+          <Login />
+        )}
+      </Router>
     </AuthContext.Provider>
   );
 }
