@@ -16,8 +16,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import DrawerList from "./DrawerList";
 
-import userContext from "../userContext";
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -94,6 +92,11 @@ export default function LeftDrawer(props) {
     setOpen(false);
   };
 
+  const logoutHandler = (event) => {
+    event.preventDefault();
+    history.push("/login");
+  };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -116,22 +119,16 @@ export default function LeftDrawer(props) {
           <Typography variant="h6" noWrap>
             Ticket Open
           </Typography>
-          <userContext.Consumer>
-            {([_authTokens, setAuthTokens]) => {
-              return (
-                <Button
-                  className={classes.buttonRight}
-                  onClick={() => {
-                    setAuthTokens({});
-                    history.push("/login");
-                  }}
-                  color="inherit"
-                >
-                  Logout
-                </Button>
-              );
+
+          <Button
+            className={classes.buttonRight}
+            onClick={(event) => {
+              logoutHandler(event);
             }}
-          </userContext.Consumer>
+            color="inherit"
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
