@@ -21,9 +21,7 @@ function App() {
             <Route
               exact
               path="/signup"
-              render={(props) => (
-                <SignUpSide {...props} />
-              )}
+              render={(props) => <SignUpSide {...props} />}
             />
             {/* Sign in route */}
             <Route
