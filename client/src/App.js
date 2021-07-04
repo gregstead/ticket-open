@@ -1,52 +1,60 @@
 import "./App.css";
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUpSide from "./pages/Signup";
 import Login from "./pages/Login";
-import LeftDrawer from "./components/LeftDrawer";
 import routes from "./routes";
+import DashboardLayout from "./components/DashboardLayout";
 
-import ProtectedRoute from "./components/ProtectedRoute";
-
-import userContext from "./userContext";
-
+export const AuthContext = React.createContext();
+const initialState = {
+  isAuthenticated: false,
+  id: null,
+  email: null,
+};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "LOGIN":
+      // localStorage.setItem("user", JSON.stringify(action.payload.user));
+      // localStorage.setItem("token", JSON.stringify(action.payload.token));
+      return {
+        ...state,
+        isAuthenticated: true,
+        id: action.payload.id,
+        email: action.payload.email,
+      };
+    case "LOGOUT":
+      localStorage.clear();
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      };
+    default:
+      return state;
+  }
+};
 function App() {
-  const [authTokens, setAuthTokens] = useState({});
+  const [state, dispatch] = React.useReducer(reducer, initialState);
 
   return (
-    <Router>
-      <userContext.Provider value={[authTokens, setAuthTokens]}>
-        <LeftDrawer>
-          <Switch>
-            <Route
-              exact
-              path="/signup"
-              render={(props) => (
-                <SignUpSide {...props} />
-              )}
-            />
-            {/* Sign in route */}
-            <Route
-              exact
-              path="/login"
-              render={(props) => <Login {...props} />}
-            />
-            {/* Protected routes */}
-            {routes.map((route, key) => {
-              return (
-                <ProtectedRoute
-                  exact
-                  authTokens={authTokens}
-                  path={route.path}
-                  component={route.component}
-                  key={key}
-                />
-              );
-            })}
-          </Switch>
-        </LeftDrawer>
-      </userContext.Provider>
-    </Router>
+    <AuthContext.Provider value={{ state, dispatch }}>
+      <Router>
+        {state.isAuthenticated ? (
+          <DashboardLayout>
+            <Switch>
+              {routes.map((route) => {
+                return (
+                  <Route exact path={route.path} component={route.component} />
+                );
+              })}
+            </Switch>
+          </DashboardLayout>
+        ) : (
+          <Login />
+        )}
+      </Router>
+    </AuthContext.Provider>
   );
 }
 

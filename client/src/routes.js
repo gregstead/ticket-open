@@ -1,10 +1,8 @@
-
 import AddNewPatron from "./pages/AddNewPatron";
 import AddNewUser from "./pages/AddNewUser";
-import Dashboard from "./pages/Dashboard"
+import Dashboard from "./pages/Dashboard";
 import Patrons from "./pages/Patrons";
-import Users from "./pages/Users"
-import EditPatron from "./pages/EditPatron/EditPatron";
+import Users from "./pages/Users";
 
 const routes = [
   {
@@ -30,7 +28,7 @@ const routes = [
   {
     path: "/user",
     component: Users,
-  }, 
+  },
 ];
 
 export default routes;

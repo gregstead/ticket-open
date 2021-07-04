@@ -5,9 +5,10 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button"
+import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import { AuthContext } from "../App";
 
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,8 +16,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import DrawerList from "./DrawerList";
-
-import userContext from "../userContext";
 
 const drawerWidth = 240;
 
@@ -75,10 +74,13 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  buttonRight: {
+    float: "right",
+  },
 }));
 
-export default function LeftDrawer(props) {
-  const history = useHistory();
+export default function DashboardLayout(props) {
+  const { dispatch } = React.useContext(AuthContext);
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -89,6 +91,10 @@ export default function LeftDrawer(props) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const logoutHandler = (event) => {
+    dispatch({ type: "LOGOUT", payload: null });
   };
 
   return (
@@ -112,14 +118,17 @@ export default function LeftDrawer(props) {
           </IconButton>
           <Typography variant="h6" noWrap>
             Ticket Open
-          </Typography> 
-          <userContext.Consumer>
-            {([authTokens, setAuthTokens]) => {
-              return <Button onClick={() => {
-                authTokens.id ? setAuthTokens({}) && history.push("/login") : history.push("/login")}} color="inherit">hello</Button>
+          </Typography>
+
+          <Button
+            className={classes.buttonRight}
+            onClick={(event) => {
+              logoutHandler(event);
             }}
-          
-          </userContext.Consumer>
+            color="inherit"
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
