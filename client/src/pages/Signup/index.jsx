@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUpSide(props) {
+export default function SignUp() {
   const classes = useStyles();
   const history = useHistory();
   const [signupState, setSignupState] = useState({
@@ -146,22 +146,18 @@ export default function SignUpSide(props) {
               autoComplete="current-password"
               onChange={handleChange}
             />
-            <userContext.Consumer>
-            {([_authTokens, setAuthTokens]) => {
-              return (
-                <Button
+
+            <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={(event) => {handleSubmit(event,setAuthTokens)}}
+              onClick={handleSubmit}
             >
               Sign Up
             </Button>
-              )
-            }}
-            </userContext.Consumer>
+
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
