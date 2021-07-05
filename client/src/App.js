@@ -1,10 +1,11 @@
 import "./App.css";
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUp from "./pages/Signup";
 import Login from "./pages/Login";
 import routes from "./routes";
 import DashboardLayout from "./components/DashboardLayout";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 export const AuthContext = React.createContext();
 const initialState = {
@@ -15,8 +16,8 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      // localStorage.setItem("user", JSON.stringify(action.payload.user));
-      // localStorage.setItem("token", JSON.stringify(action.payload.token));
+      localStorage.setItem("id", JSON.stringify(action.payload.id));
+      localStorage.setItem("email", JSON.stringify(action.payload.email));
       return {
         ...state,
         isAuthenticated: true,
@@ -35,29 +36,48 @@ const reducer = (state, action) => {
   }
 };
 function App() {
+  const [theme, setTheme] = useState({
+    palette: {
+      type: "light",
+      primary: {
+        main: "#14213D",
+      },
+      secondary: {
+        main: "#FCA311",
+      },
+    },
+  });
+  const muiTheme = createMuiTheme(theme);
+
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   return (
-    <AuthContext.Provider value={{ state, dispatch }}>
-      <Router>
-        {state.isAuthenticated ? (
-          <DashboardLayout>
+    <MuiThemeProvider theme={muiTheme}>
+      <AuthContext.Provider value={{ state, dispatch }}>
+        <Router>
+          {state.isAuthenticated ? (
+            <DashboardLayout>
+              <Switch>
+                {routes.map((route) => {
+                  return (
+                    <Route
+                      exact
+                      path={route.path}
+                      component={route.component}
+                    />
+                  );
+                })}
+              </Switch>
+            </DashboardLayout>
+          ) : (
             <Switch>
-              {routes.map((route) => {
-                return (
-                  <Route exact path={route.path} component={route.component} />
-                );
-              })}
+              <Route exact path="/login" component={Login} />
+              <Route path="/*" component={SignUp} />
             </Switch>
-          </DashboardLayout>
-        ) : (
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route path="/*" component={SignUp} />
-          </Switch>
-        )}
-      </Router>
-    </AuthContext.Provider>
+          )}
+        </Router>
+      </AuthContext.Provider>
+    </MuiThemeProvider>
   );
 }
 

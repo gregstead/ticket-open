@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import userContext from "../../userContext";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -82,7 +81,6 @@ export default function Login() {
         if (result.statusText === "OK") {
           dispatch({ type: "LOGIN", payload: result.data });
         }
-
         throw result;
       })
       .catch((error) => {
