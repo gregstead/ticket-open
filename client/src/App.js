@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import SignUpSide from "./pages/Signup";
+import SignUp from "./pages/Signup";
 import Login from "./pages/Login";
 import routes from "./routes";
 import DashboardLayout from "./components/DashboardLayout";
@@ -51,7 +51,10 @@ function App() {
             </Switch>
           </DashboardLayout>
         ) : (
-          <Login />
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route path="/*" component={SignUp} />
+          </Switch>
         )}
       </Router>
     </AuthContext.Provider>
