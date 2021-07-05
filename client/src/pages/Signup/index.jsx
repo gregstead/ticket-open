@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import userContext from "../../userContext";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,13 +13,15 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import API from "../../utils/API";
 import Copyright from "../../components/Copyright";
+import { AuthContext } from "../../App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
   },
   image: {
-    backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundImage:
+      "url(https://source.unsplash.com/featured/?orchestra,ballet,museum,concert)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
@@ -49,39 +50,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  const classes = useStyles();
-  const history = useHistory();
-  const [signupState, setSignupState] = useState({
+  const { dispatch } = React.useContext(AuthContext);
+  const initialState = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-  });
-
-  const [isError, setIsError] = useState(false);
-
-  function handleSubmit(event, setAuth) {
-    event.preventDefault();
-    API.createNewUser(signupState)
-      .then((result) => {
-        setSignupState({
-          first_name: "",
-          last_name: "",
-          email: "",
-          password: "",
-        });
-        if (result.status === 200) {
-          setAuth(result.data);
-          history.push("/dashboard");
-        } else {
-          setIsError(true);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsError(true);
-      });
-  }
+    isSubmitting: false,
+    errorMessage: null,
+  };
+  const classes = useStyles();
+  const history = useHistory();
+  const [signupState, setSignupState] = useState(initialState);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -89,6 +69,29 @@ export default function SignUp() {
       ...signupState,
       [name]: value,
     });
+  }
+
+  function handleSubmit(event, setAuth) {
+    event.preventDefault();
+    setSignupState({
+      ...signupState,
+      isSubmitting: true,
+      errorMessage: null,
+    });
+    API.createNewUser(signupState)
+      .then((result) => {
+        if (result.statusText === "OK") {
+          dispatch({ type: "LOGIN", payload: result.data });
+        }
+        throw result;
+      })
+      .catch((error) => {
+        setSignupState({
+          ...signupState,
+          isSubmitting: false,
+          errorMessage: error.message || error.statusText,
+        });
+      });
   }
 
   return (
