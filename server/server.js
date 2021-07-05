@@ -23,7 +23,7 @@ app.use(passport.session());
 
 // Serve up static assets
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("../client/build"));
+  app.use(express.static("client/build"));
 }
 
 // Add routes, API
@@ -34,7 +34,7 @@ app.use(routes);
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.get("*", (_, res) => {
-    res.sendFile(path.join(__dirname, "../client/build"));
+    res.sendFile(path.join(__dirname, "client/build", "index/html"));
   });
 }
 
