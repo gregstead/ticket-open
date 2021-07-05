@@ -71,7 +71,7 @@ export default function SignUp() {
     });
   }
 
-  function handleSubmit(event, setAuth) {
+  function handleSubmit(event) {
     event.preventDefault();
     setSignupState({
       ...signupState,

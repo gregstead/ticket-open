@@ -1,13 +1,13 @@
 const path = require("path");
 const express = require("express");
 const helmet = require("helmet");
-// const cors = require("cors");
+const cors = require("cors");
 const session = require("express-session");
 
 const db = require("./models");
 const routes = require("./routes");
 const passport = require("./config/passport");
-// const corsOptions = require("./config/cors.js");
+const corsOptions = require("./config/cors.js");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -19,7 +19,7 @@ app.use(helmet());
 app.use(session({ secret: "TBD", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Serve up static assets
 if (process.env.NODE_ENV === "production") {
@@ -34,7 +34,7 @@ app.use(routes);
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.get("*", (_, res) => {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+    res.sendFile(path.join(__dirname, "../client/build"));
   });
 }
 

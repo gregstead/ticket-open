@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import API from "../../utils/API";
 import Copyright from "../../components/Copyright";
 import { AuthContext } from "../../App";
+import logo_200 from "../../assets/logo_200.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,9 +99,7 @@ export default function Login() {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <img src={logo_200} alt="Logo" />
           <Typography component="h1" variant="h5">
             Login
           </Typography>
