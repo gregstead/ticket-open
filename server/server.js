@@ -23,7 +23,7 @@ app.use(session({ secret: "TBD", resave: true, saveUninitialized: true }));
 
 // Serve up static assets
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("../client/build"));
+  app.use(express.static("client/build"));
 } else {
   app.use(express.static(path.join(__dirname, "client/public")));
 }
@@ -36,24 +36,26 @@ app.use(routes);
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.get("*", (_, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
   });
 }
 
 // Dynamically force schema refresh only for 'test'
 const FORCE_SCHEMA = process.env.NODE_ENV === "test";
 
-// db.sequelize
-//   .authenticate()
-//   .then(() => {
-db.sequelize.sync({ force: FORCE_SCHEMA }).then(() => {
-  app.listen(PORT, (err) => {
-    if (err) throw err;
+db.sequelize
+  .authenticate()
+  .then(() => {
+    db.sequelize.sync({ force: FORCE_SCHEMA }).then(() => {
+      app.listen(PORT, (err) => {
+        if (err) throw err;
 
-    console.log(`🌎 Server is Ready and Listening on http://localhost:${PORT}`); // eslint-disable-line no-console
-  });
-});
-// })
-// .catch(console.error); // eslint-disable-line no-console
+        console.log(
+          `🌎 Server is Ready and Listening on http://localhost:${PORT}`
+        ); // eslint-disable-line no-console
+      });
+    });
+  })
+  .catch(console.error); // eslint-disable-line no-console
 
 module.exports = app;
