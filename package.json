@@ -23,7 +23,6 @@
   "bugs": {
     "url": "https://github.com/gregstead/ticket-open/issues"
   },
-  "homepage": "https://github.com/gregstead/ticket-open#readme",
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
     "concurrently": "^6.1.0",
