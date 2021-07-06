@@ -24,8 +24,10 @@ app.use(session({ secret: "TBD", resave: true, saveUninitialized: true }));
 // Serve up static assets
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-} else {
-  app.use(express.static(path.join(__dirname, "client/public")));
+  app.get("*", (_req, res, _next) => {
+    // Serve index.html file if it doesn't recognize the route
+    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html")); // <- Here !
+  });
 }
 
 // Add routes, API
