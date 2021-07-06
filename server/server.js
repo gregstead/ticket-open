@@ -43,19 +43,17 @@ if (process.env.NODE_ENV === "production") {
 // Dynamically force schema refresh only for 'test'
 const FORCE_SCHEMA = process.env.NODE_ENV === "test";
 
-db.sequelize
-  .authenticate()
-  .then(() => {
-    db.sequelize.sync({ force: FORCE_SCHEMA }).then(() => {
-      app.listen(PORT, (err) => {
-        if (err) throw err;
+// db.sequelize
+//   .authenticate()
+//   .then(() => {
+db.sequelize.sync({ force: FORCE_SCHEMA }).then(() => {
+  app.listen(PORT, (err) => {
+    if (err) throw err;
 
-        console.log(
-          `🌎 Server is Ready and Listening on http://localhost:${PORT}`
-        ); // eslint-disable-line no-console
-      });
-    });
-  })
-  .catch(console.error); // eslint-disable-line no-console
+    console.log(`🌎 Server is Ready and Listening on http://localhost:${PORT}`); // eslint-disable-line no-console
+  });
+});
+// })
+// .catch(console.error); // eslint-disable-line no-console
 
 module.exports = app;
