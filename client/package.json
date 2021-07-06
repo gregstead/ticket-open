@@ -1,6 +1,5 @@
 {
   "name": "ticket-open",
-  "homepage": "https://ticketopen.herokuapp.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
