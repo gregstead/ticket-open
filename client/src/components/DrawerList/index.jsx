@@ -40,9 +40,6 @@ export default function NestedList() {
   const handleCampaignsClick = () => {
     setOpen({ ...open, campaigns: !open.campaigns });
   };
-  const handleDashboardClick = () => {
-
-  };
   const handlePatronsClick = () => {
     setOpen({ ...open, patrons: !open.patrons });
   };
@@ -64,14 +61,14 @@ export default function NestedList() {
       }
       className={classes.root}
     >
-      <ListItem button component={Link} to={"/dashboard"}>
+      <ListItem key={"dashboard"} button component={Link} to={"/dashboard"}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
       {/* Campaigns */}
-      <ListItem button onClick={handleCampaignsClick}>
+      <ListItem key={"campaigns"} button onClick={handleCampaignsClick}>
         <ListItemIcon>
           <LoyaltyIcon />
         </ListItemIcon>
@@ -82,11 +79,12 @@ export default function NestedList() {
         <List component="div" disablePadding>
           {[
             ["/campaign/new", "Add New Campaign"],
-            ["/campaign", "Campaigns"],
+            ["/campaign", "View Campaigns"],
             ["/campaign/edit", "Edit Campaign"],
           ].map(([path, linkText]) => {
             return (
               <ListItem
+                key={linkText}
                 button
                 className={classes.nested}
                 component={Link}
@@ -99,7 +97,7 @@ export default function NestedList() {
         </List>
       </Collapse>
       {/* Events */}
-      <ListItem button onClick={handleEventsClick}>
+      <ListItem key={"events"} button onClick={handleEventsClick}>
         <ListItemIcon>
           <EventIcon />
         </ListItemIcon>
@@ -115,6 +113,7 @@ export default function NestedList() {
           ].map(([path, linkText]) => {
             return (
               <ListItem
+                key={linkText}
                 button
                 className={classes.nested}
                 component={Link}
@@ -127,7 +126,7 @@ export default function NestedList() {
         </List>
       </Collapse>
       {/* Patrons */}
-      <ListItem button onClick={handlePatronsClick}>
+      <ListItem key={"patrons"} button onClick={handlePatronsClick}>
         <ListItemIcon>
           <FaceIcon />
         </ListItemIcon>
@@ -140,10 +139,11 @@ export default function NestedList() {
             ["/patron/new", "Make New Patron"],
             ["/patron", "View Patrons"],
             ["/reports/patron", "Patron Reports"],
-            ["/patron/edit", "Edit Patron"]
+            ["/patron/edit", "Edit Patron"],
           ].map(([path, linkText]) => {
             return (
               <ListItem
+                key={linkText}
                 button
                 className={classes.nested}
                 component={Link}
@@ -156,7 +156,7 @@ export default function NestedList() {
         </List>
       </Collapse>
       {/* Profile */}
-      <ListItem button onClick={handleUsersClick}>
+      <ListItem key={"users"} button onClick={handleUsersClick}>
         <ListItemIcon>
           <AccountCircleIcon />
         </ListItemIcon>
@@ -167,11 +167,12 @@ export default function NestedList() {
         <List component="div" disablePadding>
           {[
             ["/user/new", "Add New User"],
-            ["/user", "Users"],
+            ["/user", "View users"],
             ["/user/edit", "Edit User"],
           ].map(([path, linkText]) => {
             return (
               <ListItem
+                key={linkText}
                 button
                 className={classes.nested}
                 component={Link}
@@ -184,7 +185,7 @@ export default function NestedList() {
         </List>
       </Collapse>
       {/* Settings */}
-      <ListItem button>
+      <ListItem key={"settings"} button>
         <ListItemIcon>
           <SettingsIcon />
         </ListItemIcon>
