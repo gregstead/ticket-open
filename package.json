@@ -1,6 +1,5 @@
 {
   "name": "ticket-open",
-  "homepage": "https://ticketopen.herokuapp.com/",
   "version": "1.0.0",
   "description": "An open source nonprofit management system",
   "engines": {
