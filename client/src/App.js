@@ -55,17 +55,13 @@ function App() {
   return (
     <MuiThemeProvider theme={muiTheme}>
       <AuthContext.Provider value={{ state, dispatch }}>
-        <Router>
+        <Router basename="/index.html">
           {state.isAuthenticated ? (
             <DashboardLayout>
               <Switch>
                 {routes.map((route) => {
                   return (
-                    <Route
-                      exact
-                      path={route.path}
-                      component={route.component}
-                    />
+                    <Route path={route.path} component={route.component} />
                   );
                 })}
               </Switch>
