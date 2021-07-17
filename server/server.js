@@ -1,13 +1,13 @@
 const path = require("path");
 const express = require("express");
 const helmet = require("helmet");
-// const cors = require("cors");
+const cors = require("cors");
 const session = require("express-session");
 
 const db = require("./models");
 const routes = require("./routes");
-// const passport = require("./config/passport");
-// const corsOptions = require("./config/cors.js");
+const passport = require("./config/passport");
+const corsOptions = require("./config/cors.js");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -17,15 +17,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
 app.use(session({ secret: "TBD", resave: true, saveUninitialized: true }));
-//app.use(passport.initialize());
-//app.use(passport.session());
-// app.use(cors(corsOptions));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cors(corsOptions));
 
 // Serve up static assets
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-} else {
-  app.use(express.static(path.join(__dirname, "client/public")));
+  app.get("*", (_req, res, _next) => {
+    // Serve index.html file if it doesn't recognize the route
+    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html")); // <- Here !
+  });
 }
 
 // Add routes, API
