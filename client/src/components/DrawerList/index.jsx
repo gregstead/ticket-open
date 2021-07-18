@@ -55,27 +55,40 @@ export default function NestedList() {
       component="nav"
       aria-labelledby="Menu header"
       subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
+        <ListSubheader
+          key="subheader"
+          component="div"
+          id="nested-list-subheader"
+        >
           Menu
         </ListSubheader>
       }
       className={classes.root}
     >
-      <ListItem key={"dashboard"} button component={Link} to={"/dashboard"}>
-        <ListItemIcon>
+      <ListItem key="dashboardlist" button component={Link} to={"/dashboard"}>
+        <ListItemIcon key="dashboardIcon">
           <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText key="dashboardText" primary="Dashboard" />
       </ListItem>
       {/* Campaigns */}
-      <ListItem key={"campaigns"} button onClick={handleCampaignsClick}>
-        <ListItemIcon>
+      <ListItem key="campaigns" button onClick={handleCampaignsClick}>
+        <ListItemIcon key="campaignsIcon">
           <LoyaltyIcon />
         </ListItemIcon>
-        <ListItemText primary="Campaigns" />
-        {open.profile ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText key="campaignsText" primary="Campaigns" />
+        {open.profile ? (
+          <ExpandLess key={"campaignsExpandLess"} />
+        ) : (
+          <ExpandMore key="campaignsExpandMore" />
+        )}
       </ListItem>
-      <Collapse in={open.campaigns} timeout="auto" unmountOnExit>
+      <Collapse
+        key="campaignsCollapse"
+        in={open.campaigns}
+        timeout="auto"
+        unmountOnExit
+      >
         <List component="div" disablePadding>
           {[
             ["/campaign/new", "Add New Campaign"],
@@ -90,21 +103,30 @@ export default function NestedList() {
                 component={Link}
                 to={path}
               >
-                <ListItemText>{linkText}</ListItemText>
+                <ListItemText key={linkText + "Text"}>{linkText}</ListItemText>
               </ListItem>
             );
           })}
         </List>
       </Collapse>
       {/* Events */}
-      <ListItem key={"events"} button onClick={handleEventsClick}>
-        <ListItemIcon>
+      <ListItem key="events" button onClick={handleEventsClick}>
+        <ListItemIcon key="eventsIcon">
           <EventIcon />
         </ListItemIcon>
-        <ListItemText primary="Events" />
-        {open.events ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText key="eventsText" primary="Events" />
+        {open.events ? (
+          <ExpandLess key="eventsExpandLess" />
+        ) : (
+          <ExpandMore key="eventsExpandMore" />
+        )}
       </ListItem>
-      <Collapse in={open.events} timeout="auto" unmountOnExit>
+      <Collapse
+        key={"eventsCollapse"}
+        in={open.events}
+        timeout="auto"
+        unmountOnExit
+      >
         <List component="div" disablePadding>
           {[
             ["/event/new", "Make New Event"],
@@ -127,13 +149,22 @@ export default function NestedList() {
       </Collapse>
       {/* Patrons */}
       <ListItem key={"patrons"} button onClick={handlePatronsClick}>
-        <ListItemIcon>
+        <ListItemIcon key={"patronsIcon"}>
           <FaceIcon />
         </ListItemIcon>
-        <ListItemText primary="Patrons" />
-        {open.patrons ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText key={"patronsText"} primary="Patrons" />
+        {open.patrons ? (
+          <ExpandLess key={"patronsExpandLess"} />
+        ) : (
+          <ExpandMore key={"patronsExpandMore"} />
+        )}
       </ListItem>
-      <Collapse in={open.patrons} timeout="auto" unmountOnExit>
+      <Collapse
+        key={"patronsCollapse"}
+        in={open.patrons}
+        timeout="auto"
+        unmountOnExit
+      >
         <List component="div" disablePadding>
           {[
             ["/patron/new", "Make New Patron"],
@@ -157,13 +188,22 @@ export default function NestedList() {
       </Collapse>
       {/* Profile */}
       <ListItem key={"users"} button onClick={handleUsersClick}>
-        <ListItemIcon>
+        <ListItemIcon key={"usersIcon"}>
           <AccountCircleIcon />
         </ListItemIcon>
-        <ListItemText primary="Users" />
-        {open.users ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText key={"usersText"} primary="Users" />
+        {open.users ? (
+          <ExpandLess key={"usersExpandLess"} />
+        ) : (
+          <ExpandMore key={"usersExpandMore"} />
+        )}
       </ListItem>
-      <Collapse in={open.profile} timeout="auto" unmountOnExit>
+      <Collapse
+        key={"usersCollapse"}
+        in={open.profile}
+        timeout="auto"
+        unmountOnExit
+      >
         <List component="div" disablePadding>
           {[
             ["/user/new", "Add New User"],
@@ -186,11 +226,16 @@ export default function NestedList() {
       </Collapse>
       {/* Settings */}
       <ListItem key={"settings"} button>
-        <ListItemIcon>
+        <ListItemIcon key={"settingsIcon"}>
           <SettingsIcon />
         </ListItemIcon>
-        <ListItemText primary="Settings" component={Link} to="/settings" />
-      </ListItem>
+        <ListItemText
+          key={"settingsIconText"}
+          primary="Settings"
+          component={Link}
+          to="/settings"
+        />
+      </ListItem>{" "}
     </List>
   );
 }
