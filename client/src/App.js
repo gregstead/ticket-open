@@ -59,9 +59,16 @@ function App() {
           {state.isAuthenticated ? (
             <DashboardLayout>
               <Switch>
-                {routes.map((route) => {
+                {routes.map((route, index) => {
                   return (
-                    <Route path={route.path} component={route.component} />
+
+                    <Route
+                      exact
+                      key={"route#" + index}
+                      path={route.path}
+                      component={route.component}
+                    />
+
                   );
                 })}
               </Switch>
