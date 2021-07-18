@@ -61,12 +61,14 @@ function App() {
               <Switch>
                 {routes.map((route, index) => {
                   return (
+
                     <Route
                       exact
                       key={"route#" + index}
                       path={route.path}
                       component={route.component}
                     />
+
                   );
                 })}
               </Switch>
