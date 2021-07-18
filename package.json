@@ -1,6 +1,5 @@
 {
   "name": "ticket-open",
-  "homepage": ".",
   "version": "1.0.0",
   "description": "An open source nonprofit management system",
   "engines": {
